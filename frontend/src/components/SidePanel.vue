@@ -32,16 +32,12 @@
             </el-menu-item>
             <el-menu-item index="3-1" class="dishes">
                 <i class="el-icon-lollipop"></i>
-                <span slot="title">Low Fat</span>
-            </el-menu-item>
-            <el-menu-item index="3-2" class="dishes">
-                <i class="el-icon-ice-cream-square"></i>
-                <span slot="title">Low Sugar</span>
+                <span slot="title"  @click="$router.push('/CustomizedR')">AI Generator</span>
             </el-menu-item>
 
             <el-menu-item index="4">
                 <i class="el-icon-chat-round"></i>
-                <span slot="title">Book a supervisor</span>
+                <span slot="title" @click="$router.push('/BookAMeeting')">Book a supervisor</span>
             </el-menu-item>
         </el-menu>
     </el-aside>
