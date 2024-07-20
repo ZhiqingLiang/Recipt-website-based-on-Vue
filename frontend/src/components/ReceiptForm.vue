@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import axios from 'axios'
   export default {
     props:{
       visible:{
@@ -86,15 +87,22 @@
       };
     },
     methods: {
-      submitForm(ruleForm) {
+      submitForm() {
         this.$refs.ruleForm.validate((valid)=>{
           if(valid){
             this.$emit('submit',this.ruleForm);
             // this.$refs[ruleForm].resetFields()='';
-            this.$emit('update:visible', false); // 提交后隐藏对话框
           }
         });
-        console.log(ruleForm)
+        // 将数据发往后端
+        axios.post('/api/submitform',this.ruleForm)
+          .then(res=>{
+            alert('send successfully',res.data)
+            this.$emit('update:visible', false); // 提交后隐藏对话框
+          })
+          .catch(error=>{
+            alert('Error is:',error)
+          })
       },
       cancelForm(){
          this.$emit('update:visible', false);

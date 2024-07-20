@@ -69,7 +69,6 @@ export default {
   background-size: cover; /* 背景图覆盖整个容器 */
   background-repeat: no-repeat; /* 背景图不重复 */
   min-height: 100vh; /* 使容器至少占满整个视窗高度 */
-  height: 100vh;
   overflow: auto;
 
 }

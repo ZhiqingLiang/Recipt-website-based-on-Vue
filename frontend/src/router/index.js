@@ -7,7 +7,7 @@ import ISaladR from '../views/ISaladR.vue'
 import CustomizedR from '../views/CustomizedR.vue'
 import AboutView from '../views/AboutView.vue'
 import BookAMeeting from '../views/BookAMeeting.vue'
-
+import ReceiptDetail from '../views/ReceiptDetail.vue'
 
 
 Vue.use(VueRouter)
@@ -47,6 +47,11 @@ const routes = [
     path: '/BookAMeeting',
     name: 'BookAMeeting',
     component: BookAMeeting
+  },
+  {
+    path: '/ReceiptDetail',
+    name: 'ReceiptDetail',
+    component: ReceiptDetail
   },
   
   
