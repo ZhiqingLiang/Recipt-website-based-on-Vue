@@ -30,17 +30,15 @@ export default {
   data(){
     return{
       ruleFormVisible:false,
-      boxes:[
-                {id:1,image:'',name:'Rice',energy:'500Kcal',cookingtime:'30mins',label:'Chinese Noodle'},
-                {id:2,image:'',name:'Rice',energy:'500Kcal',cookingtime:'30mins',label:'Chinese Noodle'},
-            ]
-    }
+      boxes:[]
+    };
   },
   // show:控制表单的显示
   // newReceipt:创建新的对象
   methods:{
-    handleFormSubmit(form){
-      const newReceipt ={
+    async handleFormSubmit(form){
+      try{
+        const newReceipt ={
         title:form.title,
         energy:form.energy,
         cookingtime:form.cookingtime,
@@ -48,15 +46,35 @@ export default {
         label:form.receipt,
         id:Date.now() //事件戳创建新的id
       };
-      this.boxes.push(newReceipt);
-      this.ruleFormVisible=false;
-  
+      // 发送请求到后端
+        const res = await axios.post('/api/addChineseN',newReceipt)
+        this.boxes.push(res.data);
+        this.ruleFormVisible=false;
+      }catch(error){
+        throw new Error('Cannot add a receipt:',error);
+      }
     },
     show(){
       this.ruleFormVisible=true;
     },
-    del(id){
-      this.boxes= this.boxes.filter(box=>box.id !=id)
+    async del(id){
+      try{
+        await axios.delete(`/api/delChineseN/${id}`)
+        this.boxes= this.boxes.filter(box=>box.id !=id)
+      }catch(error){
+        throw new Error('Cannot delete a receipt:',error)
+      }
+    },
+    async load(){
+      try{
+        const load = await axios.get('/api/getChineseN',);
+        this.boxes = load.data;
+      }catch(error){
+        throw new Error('Cannot load receipt:',error)
+      }
+    },
+    mounted(){
+      this.load();//页面加载时获取数据
     }
   }
 }
