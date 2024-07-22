@@ -8,15 +8,21 @@ import express from 'express';
 import cors from 'cors';
 import {chat} from './OpenAI.js'
 import bodyParser from 'body-parser';
+import UserRoutes from './routes/UserRoutes.js';
+import ChineseNoodlesR from './routes/ChineseNoodlesR.js'
+import sendData from './SendMail.js';
+import mongoose from 'mongoose';
 
-const ChineseNoodlesR = require('./router/ChineseNoodlesR')
 const app = express();
 // 设置服务器监听的端口号3000
 const port = 3000; 
-const sendData = require('./SendMail.js')
+
 
 // 跨平台传数据
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080', // 你的前端服务器地址
+  credentials: true
+}));
 // 解析JSON格式的请求体
 app.use(express.json())
 app.use(bodyParser.json())
@@ -61,7 +67,8 @@ mongoose.connect('mongodb://localhost:27017/receiptdb', { useNewUrlParser: true,
   });
 
   // 启动后端的时候，会启动serve.js，所以需要由路由导航到每一个路由文件中
-app.use('/api/chinesenoodels',ChineseNoodlesR)
+app.use('/api/ChineseNoodles',ChineseNoodlesR);
+app.use('/api/Users',UserRoutes);
 
 
 //   -----------------------------------------------------

@@ -8,8 +8,8 @@
       <el-form-item label="Name" prop="name" required>
         <el-input v-model="ruleForm.name" id="name"></el-input>
       </el-form-item>
-      <el-form-item label="Receipt" prop="receipt">
-        <el-select v-model="ruleForm.receipt" placeholder="please select a option" id="receipt">
+      <el-form-item label="Receipt" prop="label">
+        <el-select v-model="ruleForm.label" placeholder="please select a option" id="label">
           <el-option label="Chinese Noodles" value="Chinese Noodles"></el-option>
           <el-option label="Chinese Stewed Rice" value="Chinese Stewed Rice"></el-option>
           <el-option label="Italian Pasta" value="Italian Pasta"></el-option>
@@ -28,7 +28,7 @@
       <el-form-item label="Video's URL" prop="VURL" required>
         <el-input v-model="ruleForm.VURL" id="VURL"></el-input>
       </el-form-item>
-      <el-form-item label="Cooking steps" prop="desc" style="width:18rem">
+      <el-form-item label="Cooking steps" prop="desc">
         <el-input type="textarea" v-model="ruleForm.desc" id="desc"></el-input>
       </el-form-item>
       <el-form-item>
@@ -53,7 +53,7 @@ import axios from 'axios'
         showForm:false,
         ruleForm: {
           name: '',
-          receipt: '',
+          label: '',
           cookingtime:'',
           energy:'',
           PURL: '',
@@ -65,7 +65,7 @@ import axios from 'axios'
           name: [
             { required: true, message: 'input receipt title', trigger: 'blur' },
           ],
-          receipt: [
+          label: [
             { required: true, message: 'please select one option', trigger: 'change' }
           ],
           cookingtime: [
@@ -87,22 +87,22 @@ import axios from 'axios'
       };
     },
     methods: {
-      submitForm() {
-        this.$refs.ruleForm.validate((valid)=>{
+      async submitForm() {
+        this.$refs.ruleForm.validate(async(valid)=>{
           if(valid){
-            this.$emit('submit',this.ruleForm);
+            try{
+              console.log('sending data:',this.ruleForm);
+              const res = await axios.post('http://localhost:3000/api/ChineseNoodles/addChineseN',this.ruleForm)
+              console.log('response data:',res.data)
+              this.$emit('submit',res.data);// 传递新添加的菜谱数据
+              this.localVisible = false;
+            }catch(error){
+              console.error('Error adding recipe:', error);
+            }
             // this.$refs[ruleForm].resetFields()='';
           }
         });
-        // 将数据发往后端
-        axios.post('/api/submitform',this.ruleForm)
-          .then(res=>{
-            alert('send successfully',res.data)
-            this.$emit('update:visible', false); // 提交后隐藏对话框
-          })
-          .catch(error=>{
-            alert('Error is:',error)
-          })
+
       },
       cancelForm(){
          this.$emit('update:visible', false);

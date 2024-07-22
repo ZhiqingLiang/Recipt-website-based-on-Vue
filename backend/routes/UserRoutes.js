@@ -1,9 +1,10 @@
 // Date:2024/7/21
 // Author:Zhiqing Liang
 
-const express = require('express');
+import express from 'express';
+import {User} from '../models/Users.js'
 const router = express.Router();
-const User = require('../models/users');
+
 
 //接收前端
 router.post('/login', async (req, res) => {
@@ -41,5 +42,5 @@ try {
     });
 
 //导出模块在serve.js引入并使用
-module.exports =router
+export default router
 

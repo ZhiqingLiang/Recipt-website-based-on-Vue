@@ -12,6 +12,10 @@
         allowfullscreen
         ></iframe>
   </div>
+  <div class="photo">
+    {{ photo }}
+    hello
+  </div>
     <div class="cookingDetail">
         <p>Energy: {{energy}}</p>
         <p>CookingTime:{{cookingtime}}</p>
@@ -31,6 +35,7 @@ export default {
         return {
             title:'',
             videoSrc: 'https://www.youtube.com/embed/-iwXnnJjnR4?si=6hZZ9Cct1Gh2Srms',
+            photo:'',
             energy:'',
             cookingtime:'',
             cookingstep:''

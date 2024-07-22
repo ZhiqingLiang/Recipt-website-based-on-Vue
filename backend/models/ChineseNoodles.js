@@ -3,7 +3,7 @@
 
 
 
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 // 验证是否有效的网址
 const url = (value)=>{
   const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
@@ -11,25 +11,26 @@ const url = (value)=>{
 }
 
 const cNoodelsSchema = new mongoose.Schema({
+    id:{type:Number,required:true,unique:true},
     name: {type:String,required:true},
-    receipt: {type:String,required:true},
-    cookingtime:{type:Number,require:true},
+    label: {type:String,required:true},
+    cookingtime:{type:String,require:true},
     energy:{type:String,required:true},
     PURL: {
         type:String,
-        validate:{
-            validator:url,
-            message: props => `${props.value} is not a valid URL!`
-        },
+        // validate:{
+        //     validator:url,
+        //     message: props => `${props.value} is not a valid URL!`
+        // },
     },
     VURL: {
         type:String,
-        validate:{
-            validator:url,
-            message: props => `${props.value} is not a valid URL!`
-        },
+        // validate:{
+        //     validator:url,
+        //     message: props => `${props.value} is not a valid URL!`
+        // },
     },
     desc:{type:String,required:true}
 })
 
-module.exports = mongoose.model('ChineseNoodles',cNoodelsSchema)
+export const ChineseNoodles = mongoose.model('ChineseNoodles',cNoodelsSchema,'ChineseNoodles')

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 import CNoodleR from '../views/CNoodleR.vue'
 import CRiceR from '../views/CRiceR.vue'
 import IPastaR from '../views/IPastaR.vue'
@@ -11,70 +11,89 @@ import ReceiptDetail from '../views/ReceiptDetail.vue'
 import LoginView from '../views/LoginView.vue'
 
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-const routes = [
-  {
-    path: '/',
-    redirect: '/LoginView'
-  },
-  {
-    path: '/LoginView',
-    name: 'LoginView',
-    component: LoginView,
-    children:[
-      {
-        path: '/AboutView',
-        name: 'AboutView',
-        component: AboutView
-      },
-      {
-        path: '/CNoodleR',
-        name: 'CNoodleR',
-        component: CNoodleR
-      },
-      {
-        path: '/CRiceR',
-        name: 'CRiceR',
-        component: CRiceR
-      },
-      {
-        path: '/IPastaR',
-        name: 'IPastaR',
-        component: IPastaR
-      },
-      {
-        path: '/ISaladR',
-        name: 'ISaladR',
-        component: ISaladR
-      },
-      {
-        path: '/CustomizedR',
-        name: 'CustomizedR',
-        component: CustomizedR
-      },
-      {
-        path: '/BookAMeeting',
-        name: 'BookAMeeting',
-        component: BookAMeeting
-      },
-      {
-        path: '/ReceiptDetail',
-        name: 'ReceiptDetail',
-        component: ReceiptDetail
-      },
-
-    ]
-  },
-  
-  
-  
-]
-
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+const router = new Router({
+  mode:'history',
+  routes:[
+    {
+      path: '/',
+      redirect: '/LoginView'
+    },
+    {
+      path: '/LoginView',
+      name: 'LoginView',
+      component: LoginView,
+    },
+        {
+          path: '/',
+          name: 'AboutView',
+          component: AboutView,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/CNoodleR',
+          name: 'CNoodleR',
+          component: CNoodleR,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/CRiceR',
+          name: 'CRiceR',
+          component: CRiceR,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/IPastaR',
+          name: 'IPastaR',
+          component: IPastaR,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/ISaladR',
+          name: 'ISaladR',
+          component: ISaladR,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/CustomizedR',
+          name: 'CustomizedR',
+          component: CustomizedR,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/BookAMeeting',
+          name: 'BookAMeeting',
+          component: BookAMeeting,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: '/ReceiptDetail',
+          name: 'ReceiptDetail',
+          component: ReceiptDetail,
+          meta: { requiresAuth: true }
+        }
+  ]
 })
+   
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem('userToken');
+
+  if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
+    next('/LoginView');
+  } else if (to.path === '/LoginView' && isLoggedIn) {
+    next('/AboutView');
+  } else {
+    next();
+  }
+});
+  
+
+
+// const router = new VueRouter({
+//   mode: 'history',
+//   base: process.env.BASE_URL,
+//   routes
+// })
 
 export default router

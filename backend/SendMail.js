@@ -4,7 +4,8 @@
 // 1.https://nodemailer.com/about/
 // 2.https://cloud.tencent.com/developer/article/1822406
 
-const nodemailer = require("nodemailer");
+
+import nodemailer from 'nodemailer'
 
 const sendData = ({username,number,date1,date2,desc},callback)=>{
     // 创建一个传输对象
@@ -36,7 +37,7 @@ const sendData = ({username,number,date1,date2,desc},callback)=>{
     
 };
 // 导出这个函数，使其可以在其他文件中被引入
-module.exports=sendData;
+export default sendData;
 
 
 

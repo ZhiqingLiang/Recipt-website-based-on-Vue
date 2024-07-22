@@ -20,6 +20,7 @@ Vue.component('ReceiptBox',ReceiptBox)
 Vue.component('ReceiptForm',ReceiptForm)
 Vue.component('Footer',Footer)
 
+
 new Vue({
   router,
   render: h => h(App)

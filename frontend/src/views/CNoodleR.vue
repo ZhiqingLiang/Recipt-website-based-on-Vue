@@ -1,3 +1,6 @@
+// Date:2024/7/22
+// Author:Zhiqing Liang
+
 <template>
   <div class="container">
     <h1 class="receipTtitle">Chinese Recipts:Noodle</h1>
@@ -6,7 +9,7 @@
         <li class="box" >
           <a href="#">
               <div class="image">
-                  <img src="" alt="img">
+                  <img :src="box.PURL" alt="img">
               </div>
           </a>
           <div class="txt">
@@ -30,28 +33,37 @@ export default {
   data(){
     return{
       ruleFormVisible:false,
-      boxes:[]
+      boxes:[ // 存储菜谱的数组
+        {
+        id:1,
+        name:"noodles",
+        label:"Chinese Noodle", 
+        energy:"436Kcal",
+        cookingtime:"30mins",
+        PURL: "https://cp1.douguo.com/upload/caiku/1/a/f/750_1ab3577a84b50d698cd17cfa140f904f.jpg"
+        }
+      ] 
     };
   },
+
   // show:控制表单的显示
   // newReceipt:创建新的对象
   methods:{
     async handleFormSubmit(form){
+      this.ruleFormVisible=false;
+      this.boxes.push(form);
+    },
+    async fetchData(){
+      console.log('Fetching data...'); // 添加初始日志
       try{
-        const newReceipt ={
-        title:form.title,
-        energy:form.energy,
-        cookingtime:form.cookingtime,
-        img:form.PURL,
-        label:form.receipt,
-        id:Date.now() //事件戳创建新的id
-      };
       // 发送请求到后端
-        const res = await axios.post('/api/addChineseN',newReceipt)
-        this.boxes.push(res.data);
-        this.ruleFormVisible=false;
+        const res = await axios.get('http://localhost:3000/api/ChineseNoodles/getChineseN');
+        console.log("Received res:",res)
+        this.boxes = res.data; // 替换现有的菜谱数组
+        console.log("updated data:",this.boxes)
       }catch(error){
-        throw new Error('Cannot add a receipt:',error);
+        // throw new Error('Cannot add a receipt:',error);
+        console.log("cannot get a data",error)
       }
     },
     show(){
@@ -59,22 +71,16 @@ export default {
     },
     async del(id){
       try{
-        await axios.delete(`/api/delChineseN/${id}`)
+        await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${id}`)
+        console.log(id);
         this.boxes= this.boxes.filter(box=>box.id !=id)
       }catch(error){
         throw new Error('Cannot delete a receipt:',error)
       }
     },
-    async load(){
-      try{
-        const load = await axios.get('/api/getChineseN',);
-        this.boxes = load.data;
-      }catch(error){
-        throw new Error('Cannot load receipt:',error)
-      }
-    },
-    mounted(){
-      this.load();//页面加载时获取数据
+    created(){
+      console.log('Component created');
+      this.fetchData();
     }
   }
 }
@@ -124,4 +130,9 @@ export default {
     font-size: 16px;
     padding: 0.25rem;
 } 
+.image img{
+  text-align: center;
+  width: 15rem;
+  height: 8rem;
+}
 </style>;

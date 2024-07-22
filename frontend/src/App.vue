@@ -1,21 +1,28 @@
 <template>
   <div id="App">
-    <HeaderNav></HeaderNav>
-    <div class="content">
-      <SidePanel></SidePanel>
-      <div class="main">
-        <router-view/>
+    <div v-if="isLoginPage">
+       <router-view />
       </div>
-      
-    </div>
-   
-    <Footer></Footer>
+      <HeaderNav></HeaderNav>
+      <div class="content">
+        <SidePanel></SidePanel>
+        <div class="main">
+          <router-view/>
+        </div>
+      </div>
+      <Footer></Footer>
+    
   </div>
 </template>
 
 <script>
 export default {
-
+  computed:{
+    // 判断当前路由是否是登录页面
+    isLoginPage(){
+      return this.$route.path === '/LoginView'
+    }
+  }
 }
 </script>
 

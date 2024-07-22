@@ -36,8 +36,8 @@
             <div class="toggle-container">
                 <div class="toggle">
                     <div class="toggle-panel toggle-left">
-                        <h1>Hello,Nice to Meet You</h1>
-                        <p>Enter your personal details and start journey with us</p>
+                        <h2>Hello,Nice to Meet You</h2>
+                        <p>Ready to start journey with us</p>
                         <button class="hidden" id="login" @click="togglePanel(false)">Sign In</button>
                     </div>
                     <div class="toggle-panel toggle-right">
@@ -227,12 +227,13 @@ export default {
         },
         async login(){
             try {
-                const response = await axios.post('http://localhost:3000/login', {
+                const response = await axios.post('http://localhost:3000/api/Users/login', {
                     username: this.loginData.username,
                     password: this.loginData.password
                 });
+                localStorage.setItem('userToken', 'someToken');
                 if (response.data.success) {
-                this.$router.push('/BaseLayout');
+                this.$router.push('/AboutView');
             } else {
                 alert('Invalid username or password');
             }
@@ -243,7 +244,7 @@ export default {
         },
         async register(){
             try {
-                const response = await axios.post('http://localhost:3000/register', {
+                const response = await axios.post('http://localhost:3000/api/Users/register', {
                     username: this.registerData.username,
                     password: this.registerData.password,
                     email:this.registerData.email

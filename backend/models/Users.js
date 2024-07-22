@@ -4,7 +4,7 @@
 // Reference Link:https://blog.csdn.net/m0_65789515/article/details/132666062
 // the rest of the model's js document both reference this links
 
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 //  ----------Login & Register Part -------
   // 定义模式和模型
@@ -15,4 +15,4 @@ const userSchema = new mongoose.Schema({
   });
 
 //   模型定义了集合collection的结构
-module.exports = mongoose.model('User',userSchema);
+export const User = mongoose.model('User',userSchema,'usersinfo');
