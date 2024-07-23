@@ -11,7 +11,8 @@ router.post('/addChineseN',async(req,res)=>{
     try{
         const newCN = new ChineseNoodles({
             ...req.body,//将对象中的所有属性和它们的值展开到新对象中
-            id:Date.now()});
+            id:Date.now()
+        });
         const save = await newCN.save();
         console.log('save receipt:',save)
         res.status(201).send(save); // 返回新添加的菜谱数据
@@ -25,10 +26,10 @@ router.post('/addChineseN',async(req,res)=>{
 router.get('/getChineseN',async(req,res)=>{
     try{
         const receipts = await ChineseNoodles.find();
-        console.log(receipts);
+        // console.log(receipts);
         const receiptsData = res.json(receipts);
         // res.send(receiptsData);
-        console.log(receiptsData);
+        // console.log(receiptsData);
     }catch(error){
         res.status(500).send(error);
     }
@@ -39,8 +40,13 @@ router.delete('/delChineseN/:id',async(req,res)=>{
     try{
         // 请求参数中获取id
         const {id} =req.params; 
-        await ChineseNoodles.findByIdAndDelete(id);//根据id删除数据库的内容
-        res.status(200).send({ message: 'Recipe deleted' });
+        console.log(`Attempting to delete recipe with id: ${id}`);
+        const result = await ChineseNoodles.findOneAndDelete(id);//根据id删除数据库的内容
+        if (!result) {
+            res.status(404).json({ message: 'Recipe not found' });
+          }else {
+            res.status(200).json({ message: 'Recipe deleted' });
+          }
     }catch(error){
         res.status(500).send(error);
     }

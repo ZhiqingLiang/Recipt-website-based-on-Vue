@@ -1,6 +1,6 @@
 <template>
-    <el-aside>
-        <el-menu class="sidePanel">
+    <el-aside :width="isCollapsed ? '0rem' : '12rem'" class="aside">
+        <el-menu class="menu">
             <el-menu-item index="1">
                 <i class="el-icon-dish"></i>
                 <span slot="title">Chinese Cuisine</span>
@@ -45,23 +45,46 @@
 
 <script>
 export default {
+    props: { //接收父组件传来的数据
+        isCollapsed: {
+            type: Boolean,
+            required: true
+        }
+  }
+    
 
 }
 </script>
 
 <style scoped>
-.sidePanel{
-    height: 100vh;
-    background-color:#F0EBE3;
+.aside {
+  transition: width 0.3s;
 }
-.sidePanel .el-menu-item{
+.menu{
+    background-color:#F0EBE3;
+    height: 100vh;
+}
+.el-menu-item{
     font-size: 18px;
     padding-bottom: 8px;
 }
 .dishes{
-    margin-left: 30px;
+    margin-left: 20px;
 }
-.el-aside{
-    width: 12rem;
+
+.sidePanel-collapsed  {
+  width: 0;
+}
+
+@media (max-width: 768px) {
+ .sidePanel {
+    width: 0;
+  }
+
+.sidePanel-collapsed {
+    min-width: 12rem;
+  }
+
+  
 }
 </style>

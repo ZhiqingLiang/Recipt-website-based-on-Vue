@@ -5,25 +5,25 @@
 <template>
 <div class="container">
     <h2 class="title">Book A Meeting </h2>
-    <el-form ref="form" :model="meetingForm" @submit.prevent="onSubmit" >
+    <el-form ref="meetingForm" :model="meetingForm" @submit.prevent="onSubmit" >
         <el-form-item label="Name">
-            <el-input v-model="meetingForm.username" id="name"></el-input>
+            <el-input v-model="meetingForm.username" id="name" required></el-input>
         </el-form-item>
         <el-form-item label="Contact Number">
-            <el-input v-model="meetingForm.number" placeholder="Telephone Number" id="number"></el-input>
+            <el-input v-model="meetingForm.number" placeholder="Telephone Number" id="number" required></el-input>
         </el-form-item>
         <el-form-item label="Time">
             <el-col :span="5">
-            <el-date-picker type="date" placeholder="select a date" v-model="meetingForm.date1"  id="time"></el-date-picker>
+            <el-date-picker type="date" placeholder="select a date" v-model="meetingForm.date1"  id="time" required></el-date-picker>
             </el-col>
             <el-col class="line" :span="2"> - </el-col>
             <el-col :span="5">
-            <el-time-picker placeholder="select a time" v-model="meetingForm.date2" ></el-time-picker>
+            <el-time-picker placeholder="select a time" v-model="meetingForm.date2" required></el-time-picker>
             </el-col>
         </el-form-item>
 
         <el-form-item label="Descripetion" >
-            <el-input type="textarea" v-model="meetingForm.desc" id="desc"></el-input>
+            <el-input type="textarea" v-model="meetingForm.desc" id="desc" required></el-input>
         </el-form-item>
         
         <el-form-item >
@@ -49,21 +49,31 @@
     },
     methods: {
       // 获取的值就是在data（）里的值
-      onSubmit() {
-        const data ={
-          username:this.username,
-          number:this.number,
-          date1:this.date1,
-          date2:this.date2,
-          desc:this.desc
-        };
-        axios.post('/api/sendemail',data)
-          .then(res=>{
-            alert("send successfully" + res.data);
-          })
-          .catch(error=>{
-            alert("Error:",error)
-          });
+      async onSubmit() {
+        // const data ={
+        //   username:this.username,
+        //   number:this.number,
+        //   date1:this.date1,
+        //   date2:this.date2,
+        //   desc:this.desc
+        // };
+        this.$refs.meetingForm.validate(async(valid)=>{ // 验证表单
+          if(valid){
+            try{
+              const res = await axios.post('http://localhost:3000/api/sendmail',this.meetingForm)
+              console.log("Email sent:",res.data);
+            }catch(error){
+              console.log("Email cannot be sent:",error)
+            }
+          }
+        })
+        
+          // .then(res=>{
+          //   alert("send successfully" + res.data);
+          // })
+          // .catch(error=>{
+          //   alert("Error:",error)
+          // });
       }
     }
   };

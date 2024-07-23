@@ -3,9 +3,9 @@
     <div v-if="isLoginPage">
        <router-view />
       </div>
-      <HeaderNav></HeaderNav>
+      <HeaderNav  @toggleSidebar="toggleSidebar"></HeaderNav>
       <div class="content">
-        <SidePanel></SidePanel>
+        <SidePanel :isCollapsed="isCollapsed"></SidePanel>
         <div class="main">
           <router-view/>
         </div>
@@ -17,6 +17,17 @@
 
 <script>
 export default {
+  data(){
+    return{
+      isCollapsed:false //父组件监听来自导航栏的按钮事件
+    }
+  },
+  methods:{
+    toggleSidebar() {
+      this.isCollapsed = !this.isCollapsed;
+    }
+
+  },
   computed:{
     // 判断当前路由是否是登录页面
     isLoginPage(){

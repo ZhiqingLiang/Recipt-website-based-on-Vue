@@ -1,4 +1,4 @@
-// Date:2024/7/19
+// Date:2024/7/31
 // Author:Zhiqing Liang
 // Reference Link:https://blog.csdn.net/jiuchabaikaishui/article/details/134272143
 // Reference Link:https://www.runoob.com/nodejs/nodejs-mongodb.html
@@ -10,7 +10,7 @@ import {chat} from './OpenAI.js'
 import bodyParser from 'body-parser';
 import UserRoutes from './routes/UserRoutes.js';
 import ChineseNoodlesR from './routes/ChineseNoodlesR.js'
-import sendData from './SendMail.js';
+import sendEmail from './SendMail.js';
 import mongoose from 'mongoose';
 
 const app = express();
@@ -46,14 +46,20 @@ app.post('/api/chatRobot',async(req,res)=>{
 });
 
 // --------- sendemail------------
-app.post('/api/sendemail',(req,res)=>{
-    const {username,number,date1,date2,desc}=req.body;
-    sendData({username,number,date1,date2,desc},(error,info)=>{
-        if(error){
-            return res.status(500).send(error.toString());
-        }
-        res.status(200).send('Email sent:' + info.response);
-    });
+app.post('/api/sendmail',async (req,res)=>{
+    // const {username,number,date1,date2,desc}=req.body;
+    // sendEmail({username,number,date1,date2,desc},(error,info)=>{
+    //     if(error){
+    //         return res.status(500).send(error.toString());
+    //     }
+    //     res.status(200).send('Email sent:' + info.response);
+    // });
+    try{
+      await sendEmail(req.body);
+      res.status(200).send('Sent successfully');
+    }catch(error){
+      console.log('There is an error when sending email:',error)
+    }
 });
 //  ----------数据库-----------
 mongoose.connect('mongodb://localhost:27017/receiptdb', { useNewUrlParser: true, useUnifiedTopology: true })

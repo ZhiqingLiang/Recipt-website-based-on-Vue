@@ -4,7 +4,7 @@
 <template>
   <div class="container">
     <h1 class="receipTtitle">Chinese Recipts:Noodle</h1>
-    <div class="receiptBox" v-for="(box,index) in boxes" :key="box.id">
+    <div class="receiptBox" v-for="box in boxes" :key="box.id">
       <ul class="boxlist" >
         <li class="box" >
           <a href="#">
@@ -14,7 +14,7 @@
           </a>
           <div class="txt">
               <h3 class="title">{{box.name}}</h3>
-              <p class="id"> id:{{index+1}}<p>
+              <p class="id"> id:{{box.id}}<p>
               <p class="label">Label:{{box.label}}</p>
               <p class="energy">Energy:{{box.energy}}</p>
               <p class="cookingtime">CookingTime:{{box.cookingtime}}</p>
@@ -29,7 +29,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+  created(){
+      console.log('Component created');
+      this.fetchData();
+    },
   data(){
     return{
       ruleFormVisible:false,
@@ -49,9 +55,19 @@ export default {
   // show:控制表单的显示
   // newReceipt:创建新的对象
   methods:{
+    
     async handleFormSubmit(form){
-      this.ruleFormVisible=false;
-      this.boxes.push(form);
+      try{
+        this.ruleFormVisible=false;
+      // this.boxes.push(form);
+        const res = await axios.post('http://localhost:3000/api/ChineseNoodles/addChineseN',form);
+        console.log('response data:', res.data);
+        this.fetchData(); 
+
+      }catch(error){
+        console.log("Cannot send data to backend",error)
+      }
+      
     },
     async fetchData(){
       console.log('Fetching data...'); // 添加初始日志
@@ -59,7 +75,7 @@ export default {
       // 发送请求到后端
         const res = await axios.get('http://localhost:3000/api/ChineseNoodles/getChineseN');
         console.log("Received res:",res)
-        this.boxes = res.data; // 替换现有的菜谱数组
+        this.boxes = [...this.boxes, ...res.data]; // 合并数据
         console.log("updated data:",this.boxes)
       }catch(error){
         // throw new Error('Cannot add a receipt:',error);
@@ -70,18 +86,16 @@ export default {
       this.ruleFormVisible=true;
     },
     async del(id){
+       console.log(`Deleting receipt with id: ${id}`); // 打印ID
       try{
-        await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${id}`)
-        console.log(id);
+        const res = await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${id}`)
+        console.log("delete response:",res);
         this.boxes= this.boxes.filter(box=>box.id !=id)
       }catch(error){
         throw new Error('Cannot delete a receipt:',error)
       }
     },
-    created(){
-      console.log('Component created');
-      this.fetchData();
-    }
+   
   }
 }
 </script>

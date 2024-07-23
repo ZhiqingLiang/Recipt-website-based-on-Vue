@@ -92,10 +92,11 @@ import axios from 'axios'
           if(valid){
             try{
               console.log('sending data:',this.ruleForm);
-              const res = await axios.post('http://localhost:3000/api/ChineseNoodles/addChineseN',this.ruleForm)
-              console.log('response data:',res.data)
-              this.$emit('submit',res.data);// 传递新添加的菜谱数据
+              //const res = await axios.post('http://localhost:3000/api/ChineseNoodles/addChineseN',this.ruleForm)
+              //console.log('response data:',res.data)
+              this.$emit('submit', { ...this.ruleForm });// 传递新添加的菜谱数据
               this.localVisible = false;
+              this.resetForm ();
             }catch(error){
               console.error('Error adding recipe:', error);
             }
@@ -104,6 +105,18 @@ import axios from 'axios'
         });
 
       },
+       resetForm() {
+        // 重置表单数据
+        this.ruleForm = {
+          name: '',
+          label: '',
+          cookingtime: '',
+          energy: '',
+          PURL: '',
+          VURL: '',
+          desc: ''
+        };
+  },
       cancelForm(){
          this.$emit('update:visible', false);
       }

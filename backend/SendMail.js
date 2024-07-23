@@ -7,37 +7,32 @@
 
 import nodemailer from 'nodemailer'
 
-const sendData = ({username,number,date1,date2,desc},callback)=>{
+const transport = nodemailer.createTransport({
+    host:'smtp.qq.com',
+    secure:false,
+    port: 587,
+    auth: {
+        user: 'vanyaliang@foxmail.com', 
+        pass: 'jdrencbcfsbibeda'    
+    }
+});
+
+const sendEmail = async ({username,number,date1,date2,desc})=>{
     // 创建一个传输对象
-    const transport = nodemailer.createTransport({
-        host:'smtp.qq.com',
-        secure:false,
-        port: 587,
-        auth: {
-            user: 'vanyaliang@foxmail.com', 
-            pass: 'jdrencbcfsbibeda'    
-        }
-    });
-    
     const mailContent ={
         from: 'vanyaliang@foxmail.com', // 发件人地址
         to:'testforproject89@gmail.com',
-        subject:'About have a meeting with you',
-        username:username,
-        phonenumber:number,
-        date1:date1,
-        date2:date2,
-        desc:desc
+        subject:`Message from ${username}`,
+        text:`${username}'s phone number is ${number}.${username} 
+        would like to have a meeting with you on ${date1} at ${date2}. And this is the description: ${desc}`
     };
     
     // 发送邮件
-    transport.sendData(mailContent,(error,info)=>{
-        callback(error,info)
-    });
+    await transport.sendMail(mailContent)
     
 };
 // 导出这个函数，使其可以在其他文件中被引入
-export default sendData;
+export default sendEmail;
 
 
 
