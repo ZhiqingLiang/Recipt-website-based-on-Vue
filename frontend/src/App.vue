@@ -1,3 +1,6 @@
+// Date:2024/7/1
+// Author:Zhiqing Liang
+
 <template>
   <div id="App">
     <div v-if="isLoginPage">
@@ -17,6 +20,10 @@
 
 <script>
 export default {
+  mounted(){
+    this.restore();
+    window.addEventListener('resize', this.restore);
+  },
   data(){
     return{
       isCollapsed:false //父组件监听来自导航栏的按钮事件
@@ -25,6 +32,13 @@ export default {
   methods:{
     toggleSidebar() {
       this.isCollapsed = !this.isCollapsed;
+    },
+    restore(){
+        if(window.innerWidth>768 ){
+            this.isCollapsed = true;
+        }else{
+          this.isCollapsed=false;
+        }
     }
 
   },
@@ -46,7 +60,7 @@ export default {
   display: flex;
   flex: 1;
 }
-SidePanel{
+.SidePanel{
   width: 12rem;
 }
 .main{
@@ -55,5 +69,6 @@ SidePanel{
 HeaderNav Footer{
   flex-shrink: 0;
 }
+
 
 </style>

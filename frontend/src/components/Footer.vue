@@ -13,10 +13,11 @@ export default {
 <style scoped>
 .footer{
     background-color: #F6F5F2;
+    width: 100vw;
     text-align: center;
     color: rgb(8, 8, 8);
 }
-.footer .copyright{
+.copyright{
     font-size: 16px;
     margin-top: 20px;
 }

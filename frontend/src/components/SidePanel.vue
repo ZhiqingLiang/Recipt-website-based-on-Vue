@@ -1,5 +1,5 @@
 <template>
-    <el-aside :width="isCollapsed ? '0rem' : '12rem'" class="aside">
+    <el-aside :width="isCollapsed ? '12rem' : '0rem'" class="aside">
         <el-menu class="menu">
             <el-menu-item index="1">
                 <i class="el-icon-dish"></i>
@@ -50,7 +50,10 @@ export default {
             type: Boolean,
             required: true
         }
-  }
+    },
+    methods:{
+   
+    }
     
 
 }
@@ -72,18 +75,22 @@ export default {
     margin-left: 20px;
 }
 
-.sidePanel-collapsed  {
+/* .sidePanel-collapsed  {
   width: 0;
-}
-
+} */
+/* @media (min-width: 769px) {
+ .aside{
+    width: 12rem;
+ }
+} */
 @media (max-width: 768px) {
- .sidePanel {
+ .aside {
     width: 0;
   }
 
-.sidePanel-collapsed {
+/* .sidePanel-collapsed {
     min-width: 12rem;
-  }
+  } */
 
   
 }

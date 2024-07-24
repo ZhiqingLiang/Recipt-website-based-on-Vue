@@ -2,10 +2,10 @@
   <el-header class="header">
         <el-menu class="topMenu" mode="horizontal">
           <!-- //将点击事件传送给父组件 -->
-          <el-button size="mini" round @click="$emit('toggleSidebar')" class="toggle-button">{{ isCollapsed ? 'Expand' : 'Collapse' }}</el-button> 
+          <el-button size="mini" round @click="$emit('toggleSidebar')" class="toggle-button">{{ isCollapsed ? '>' : '<' }}</el-button> 
           <el-menu-item index="1" class="itemMenu"  @click="$router.push('/')">About</el-menu-item>
           <el-menu-item index="2" class="itemMenu">Language</el-menu-item>
-          <el-menu-item index="3" class="itemMenu">Logout</el-menu-item>
+          <el-menu-item index="3" class="itemMenu" @click="Logout">Logout</el-menu-item>
         </el-menu>
     </el-header>        
 </template>
@@ -18,6 +18,14 @@ export default {
       required: true,
     },
   },
+  methods:{
+    Logout(){
+      // 清除登录状态
+      localStorage.removeItem('isLoggedIn');
+      // 重定向到登录页面
+      this.$router.push({ name: 'LoginView' });
+    },
+  }
 }
 </script>
 
@@ -38,7 +46,8 @@ export default {
   }
   .toggle-button {
     display: none;
-}
+  }
+
 
 @media (max-width: 768px) {
   .toggle-button {
@@ -50,6 +59,10 @@ export default {
     /* padding: 0.5rem; */
    
   }
+  .topMenu{
+    text-align: center;
+  }
+
 }
 
 </style>

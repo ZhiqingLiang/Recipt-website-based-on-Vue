@@ -1,7 +1,10 @@
 // Date:2024/7/3
 // Author:Zhiqing Liang
 // copyright:@Newcastle University
-// Reference Link:https://www.youtube.com/watch?v=PlpM2LJWu-s
+// Reference Link:
+// 1.https://www.youtube.com/watch?v=PlpM2LJWu-s
+// 2.https://blog.51cto.com/u_16213391/7055483
+// 3.https://blog.csdn.net/2401_84435700/article/details/138628542
 
 <template>
     <div id="app">
@@ -231,12 +234,13 @@ export default {
                     username: this.loginData.username,
                     password: this.loginData.password
                 });
-                localStorage.setItem('userToken', 'someToken');
+                
                 if (response.data.success) {
-                this.$router.push('/AboutView');
-            } else {
-                alert('Invalid username or password');
-            }
+                    localStorage.setItem('isLoggedIn', 'true');
+                    this.$router.push('/AboutView');
+                } else {
+                    alert('Invalid username or password');
+                }
             }catch (error) {
                 console.error('There was an error logging in:', error);
                 alert('Something happened. Please try again.');

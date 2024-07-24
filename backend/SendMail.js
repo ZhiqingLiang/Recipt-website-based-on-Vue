@@ -17,14 +17,14 @@ const transport = nodemailer.createTransport({
     }
 });
 
-const sendEmail = async ({username,number,date1,date2,desc})=>{
+const sendEmail = async ({username,number,date,time,desc})=>{
     // 创建一个传输对象
     const mailContent ={
         from: 'vanyaliang@foxmail.com', // 发件人地址
         to:'testforproject89@gmail.com',
         subject:`Message from ${username}`,
         text:`${username}'s phone number is ${number}.${username} 
-        would like to have a meeting with you on ${date1} at ${date2}. And this is the description: ${desc}`
+        would like to have a meeting with you on ${date} at ${time}. And this is the description: ${desc}`
     };
     
     // 发送邮件
