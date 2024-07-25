@@ -7,7 +7,7 @@
     <div class="receiptBox" v-for="box in boxes" :key="box.id">
       <ul class="boxlist" >
         <li class="box" >
-          <a href="#">
+          <a href="/ReceiptDetail" @click="navigate">
               <div class="image">
                   <img :src="box.PURL" alt="img">
               </div>
@@ -42,10 +42,10 @@ export default {
       boxes:[ // 存储菜谱的数组
         {
         id:1,
-        name:"noodles",
+        name:"Egg Braised Noodles",
         label:"Chinese Noodle", 
-        energy:"436Kcal",
-        cookingtime:"30mins",
+        energy:"600Kcal",
+        cookingtime:"25mins",
         PURL: "https://cp1.douguo.com/upload/caiku/1/a/f/750_1ab3577a84b50d698cd17cfa140f904f.jpg"
         }
       ] 
@@ -95,6 +95,12 @@ export default {
         throw new Error('Cannot delete a receipt:',error)
       }
     },
+    navigate(e){
+      this.$router.push('/ReceiptDetail');
+      // 阻止默认行为以避免页面刷新
+      e.preventDefault();
+
+    }
    
   }
 }

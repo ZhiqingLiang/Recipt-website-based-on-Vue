@@ -20,7 +20,7 @@ const port = 3000;
 
 // 跨平台传数据
 app.use(cors({
-  origin: 'http://localhost:8081', // 你的前端服务器地址
+  origin: 'http://localhost:8080', // 你的前端服务器地址
   credentials: true
 }));
 // 解析JSON格式的请求体

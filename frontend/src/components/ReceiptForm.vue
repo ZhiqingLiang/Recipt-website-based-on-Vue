@@ -16,6 +16,9 @@
           <el-option label="Italian Salad" value="Italian Salad"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="Ingredients" prop="ingredients" required>
+        <el-input v-model="ruleForm.ingredients" id="ingredients"></el-input>
+      </el-form-item>
       <el-form-item label="CookingTime" prop="cookingtime" required>
         <el-input v-model="ruleForm.cookingtime" id="cookingtime"></el-input>
       </el-form-item>
@@ -54,6 +57,7 @@ import axios from 'axios'
         ruleForm: {
           name: '',
           label: '',
+          ingredients:'',
           cookingtime:'',
           energy:'',
           PURL: '',
@@ -67,6 +71,9 @@ import axios from 'axios'
           ],
           label: [
             { required: true, message: 'please select one option', trigger: 'change' }
+          ],
+          ingredients:[
+             { required: true, message: 'input receipt title', trigger: 'blur' },
           ],
           cookingtime: [
             { required: true, message: 'input a time', trigger: 'blur' }
@@ -111,6 +118,7 @@ import axios from 'axios'
           name: '',
           label: '',
           cookingtime: '',
+          ingredients:'',
           energy: '',
           PURL: '',
           VURL: '',

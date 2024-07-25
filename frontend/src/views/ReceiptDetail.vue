@@ -3,8 +3,8 @@
 
 <template>
 <div class="container">
-    <h2 class="title">{{title}}11</h2>
-    <div class="video">
+    <h2 class="title">Egg Braised Noodles</h2>
+    <div class="media">
         <iframe
         :src="videoSrc"
         frameborder="0"
@@ -13,16 +13,46 @@
         ></iframe>
   </div>
   <div class="photo">
-    {{ photo }}
-    hello
+        <img src="https://cp1.douguo.com/upload/caiku/1/a/f/750_1ab3577a84b50d698cd17cfa140f904f.jpg" alt="pic">
   </div>
     <div class="cookingDetail">
-        <p>Energy: {{energy}}</p>
-        <p>CookingTime:{{cookingtime}}</p>
+        <p>Energy: 600Kcal</p>
+        <p>CookingTime:25mins</p>
     </div>
+    <class class="ingredients">
+        <h3>Ingredients:</h3>
+        <p>
+            200g whole wheat noodles<br>
+            2 large eggs<br>
+            1 bell pepper, thinly sliced<br>
+            1 carrot, thinly sliced<br>
+            2 cloves garlic, minced<br>
+            1 small piece of ginger, julienned<br>
+            2 tablespoons low-sodium soy sauce<br>
+            1 tablespoon olive oil<br>
+            A pinch of salt and pepper<br>
+        </p>
+    </class>
     <div class="cookingstep">
-        <h3>Here is the cooking steps:</h3>
-        <p>{{cookingstep}}</p>
+        <h3>Cooking Steps:</h3>
+        <p>
+            Prepare the Noodles:<br>
+            Cook the whole wheat noodles according to the package instructions, then drain and set aside.<br><br>
+            
+            Cook the Eggs:<br>
+            Heat 1 tablespoon of olive oil in a pan, add the eggs, and scramble them into small pieces. Once cooked, remove and set aside.<br><br>
+            
+            Stir-fry Vegetables:<br>
+            In the same pan, add a little more olive oil if needed. Sauté the minced garlic and julienned ginger until fragrant.<br>
+            Add the sliced carrot and bell pepper, stir-frying until they begin to soften.<br><br>
+            
+            Braised Noodles:<br>
+            Add the cooked noodles and scrambled eggs to the pan, mixing them with the vegetables.<br>
+            Pour in 2 tablespoons of low-sodium soy sauce, and stir well to combine. Season with a pinch of salt and pepper to taste.<br><br>
+            
+            Serve:<br>
+            Transfer the braised noodles to a serving plate. Optionally, garnish with sesame seeds or chopped green onions.<br>
+        </p>
     </div>
 </div>
   
@@ -38,7 +68,8 @@ export default {
             photo:'',
             energy:'',
             cookingtime:'',
-            cookingstep:''
+            cookingstep:'',
+            ingredients:''
         };
     }
 }
@@ -56,13 +87,18 @@ export default {
     background-color: antiquewhite;
     height: 100vh;
 }
+
 .title{
     margin: 1rem 0;
     text-align: center;
     background-color: rgb(240, 255, 255,0.3);
 }
+img{
+    width: 30rem;
+    height: 16rem;
+}
 iframe{
-    width: 36rem;
+    width: 25rem;
     height: 16rem;
 }
 .cookingDetail{
@@ -74,9 +110,20 @@ iframe{
     padding: 0.5rem;
     
 }
-.cookingstep{
+.ingredients{
     width:36rem;
-    padding: 0.5rem 0;
+    padding: 0.5rem;
     background-color: rgb(240, 255, 255,0.5);
+}
+.ingredients p{
+    padding-left: 1.5rem;
+}
+.cookingstep {
+    width:36rem;
+    padding: 0.5rem ;
+    background-color: rgb(240, 255, 255,0.5);
+}
+.cookingstep p{
+    padding-left: 1.5rem;
 }
 </style>

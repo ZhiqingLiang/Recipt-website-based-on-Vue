@@ -6,7 +6,7 @@
     <div v-if="isLoginPage">
        <router-view />
       </div>
-      <HeaderNav  @toggleSidebar="toggleSidebar"></HeaderNav>
+      <HeaderNav  @toggleSidebar="toggleSidebar"  :isCollapsed="isCollapsed"></HeaderNav>
       <div class="content">
         <SidePanel :isCollapsed="isCollapsed"></SidePanel>
         <div class="main">
@@ -19,7 +19,15 @@
 </template>
 
 <script>
+import { EventBus } from '@/eventBus';
+
 export default {
+  created() {
+    EventBus.$on('language', this.language);
+  },
+  beforeDestroy() {
+    EventBus.$off('language', this.language);
+  },
   mounted(){
     this.restore();
     window.addEventListener('resize', this.restore);
@@ -39,9 +47,12 @@ export default {
         }else{
           this.isCollapsed=false;
         }
-    }
-
+    },
+    language(lang) {
+      this.$i18n.locale = lang;
+    },
   },
+  
   computed:{
     // 判断当前路由是否是登录页面
     isLoginPage(){
