@@ -4,24 +4,24 @@
 <template>
   <div class="container">
     <h1 class="receipTtitle">Chinese Recipts:Noodle</h1>
-    <div class="receiptBox" v-for="box in boxes" :key="box.id">
+    <div class="receiptBox" v-for="box in boxes" :key="box._id">
       <ul class="boxlist" >
         <li class="box" >
-          <a href="/CNoodleTemplate" @click="navigate">
+          <a href="/CNoodleTemplate" @click.prevent="navigate(box._id)" >
               <div class="image">
                   <img :src="box.PURL" alt="img">
               </div>
           </a>
           <div class="txt">
               <h3 class="title">{{box.name}}</h3>
-              <p class="id"> id:{{box.id}}<p>
+              <p class="id"> id:{{box._id}}<p>
               <p class="label">Label:{{box.label}}</p>
               <p class="energy">Energy:{{box.energy}}</p>
               <p class="cookingtime">CookingTime:{{box.cookingtime}}</p>
           </div>
         </li>
       </ul>
-       <el-button type="danger" icon="el-icon-delete" circle @click="del(box.id)"></el-button>
+       <el-button type="danger" icon="el-icon-delete" circle @click="del(box._id)"></el-button>
     </div>
     <ReceiptForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit"></ReceiptForm><br>
     <el-button type="primary" round class="button" @click="show">Add New</el-button>
@@ -30,6 +30,7 @@
 
 <script>
 import axios from 'axios';
+
 
 export default {
   created(){
@@ -41,7 +42,7 @@ export default {
       ruleFormVisible:false,
       boxes:[ // 存储菜谱的数组
         {
-        id:1,
+        _id:1,
         name:"Egg Braised Noodles",
         label:"Chinese Noodle", 
         energy:"600Kcal",
@@ -76,13 +77,13 @@ export default {
         const res = await axios.get('http://localhost:3000/api/ChineseNoodles/getChineseN');
         console.log("Received res:",res)
         // 处理每个食谱的instruction
-        const receiptData = res.data.map(boxes=>{
-          return{
-            ...boxes,
-            instructions:box.instructions.split('\n')
-          }
-        })
-        this.boxes = [...this.boxes, receiptData]; // 合并数据,原先写的是res.data
+        // const receiptData = res.data.map(boxes=>{
+        //   return{
+        //     ...boxes,
+        //     cookingsteps:boxes.cookingsteps.split('\n')
+        //   }
+        // })
+        this.boxes = [...this.boxes, ...res.data]; // 合并数据,原先写的是res.data
         console.log("updated data:",this.boxes)
       }catch(error){
         // throw new Error('Cannot add a receipt:',error);
@@ -92,20 +93,20 @@ export default {
     show(){
       this.ruleFormVisible=true;
     },
-    async del(id){
-       console.log(`Deleting receipt with id: ${id}`); // 打印ID
+    async del(_id){
+       console.log(`Deleting receipt with id: ${_id}`); // 打印ID
       try{
-        const res = await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${id}`)
+        const res = await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${_id}`)
         console.log("delete response:",res);
-        this.boxes= this.boxes.filter(box=>box.id !=id)
+        this.boxes= this.boxes.filter(box=>box._id !=_id)
       }catch(error){
         throw new Error('Cannot delete a receipt:',error)
       }
     },
-    navigate(e){
-      this.$router.push('/ReceiptDetail');
-      // 阻止默认行为以避免页面刷新
-      e.preventDefault();
+    navigate(_id){
+      this.$router.push({name:'CNoodleTemplate',params:{id:_id}});
+      console.log(`Navigating to CNoodleTemplate with id: ${_id}`);
+      
 
     }
    

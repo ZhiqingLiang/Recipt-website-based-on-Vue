@@ -13,6 +13,7 @@ import CustomizedR from '../views/CustomizedR.vue'
 import AboutView from '../views/AboutView.vue'
 import BookAMeeting from '../views/BookAMeeting.vue'
 import CNoodleTemplate from '../views/CNoodleTemplate.vue'
+import IPastaTemplate from '../views/IPastaTemplate.vue'
 import LoginView from '../views/LoginView.vue'
 
 
@@ -73,9 +74,15 @@ const router = new Router({
           // meta: { requiresAuth: true }
         },
         {
-          path: '/CNoodleTemplate',
+          path: '/CNoodleTemplate/:id',
           name: 'CNoodleTemplate',
           component: CNoodleTemplate,
+          // meta: { requiresAuth: true }
+        },
+        {
+          path: '/IPastaTemplate/:id',
+          name: 'IPastaTemplate',
+          component: IPastaTemplate,
           // meta: { requiresAuth: true }
         },
 

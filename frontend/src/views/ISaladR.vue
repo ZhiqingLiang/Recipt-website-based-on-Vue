@@ -31,8 +31,8 @@ export default {
     return{
       ruleFormVisible:false,
       boxes:[
-                {id:1,image:'',name:'Rice',energy:'500Kcal',cookingtime:'30mins',label:'Chinese Noodle'},
-                {id:2,image:'',name:'Rice',energy:'500Kcal',cookingtime:'30mins',label:'Chinese Noodle'},
+                {id:1,image:'https://cdn.pixabay.com/photo/2022/05/13/19/10/salad-7194405_1280.jpg',name:'Italian Tomato Mozzarella Salad',energy:'270Kcal',cookingtime:'20mins',label:'Italian Salad'},
+                {id:2,image:'https://d6jx1kp3ixpqy.cloudfront.net/wp-content/uploads/2017/04/Chickpea-salad-with-avocado-and-tuna-fish-641x427.jpg',name:'Italian Tuna Bean Salad',energy:'350Kcal',cookingtime:'20mins',label:'Italian Salad'},
             ]
     }
   },

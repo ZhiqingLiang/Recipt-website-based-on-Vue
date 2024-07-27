@@ -10,6 +10,7 @@ import {chat} from './OpenAI.js'
 import bodyParser from 'body-parser';
 import UserRoutes from './routes/UserRoutes.js';
 import ChineseNoodlesR from './routes/ChineseNoodlesR.js'
+import CNoodleTemplateR from './routes/CNoodleTemplateR.js'
 import sendEmail from './SendMail.js';
 import mongoose from 'mongoose';
 
@@ -75,6 +76,7 @@ mongoose.connect('mongodb://localhost:27017/receiptdb', { useNewUrlParser: true,
   // 启动后端的时候，会启动serve.js，所以需要由路由导航到每一个路由文件中
 app.use('/api/ChineseNoodles',ChineseNoodlesR);
 app.use('/api/Users',UserRoutes);
+// app.use('/api/ChineseNoodles',CNoodleTemplateR)
 
 
 //   -----------------------------------------------------

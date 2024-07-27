@@ -62,6 +62,8 @@ export default {
 <style scoped>
 .aside {
   transition: width 0.3s;
+  height: 100vh;
+  background-color:#F0EBE3;
 }
 .menu{
     background-color:#F0EBE3;
@@ -86,6 +88,8 @@ export default {
 @media (max-width: 768px) {
  .aside {
     width: 0;
+    height: 100vh;
+    background-color:#F0EBE3;
   }
 
 /* .sidePanel-collapsed {

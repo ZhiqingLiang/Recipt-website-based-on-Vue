@@ -31,8 +31,8 @@
       <el-form-item label="Video's URL" prop="VURL" required>
         <el-input v-model="ruleForm.VURL" id="VURL"></el-input>
       </el-form-item>
-      <el-form-item label="Cooking steps" prop="desc">
-        <el-input type="textarea" v-model="ruleForm.desc" id="desc"></el-input>
+      <el-form-item label="Cooking steps" prop="cookingsteps">
+        <el-input type="textarea" v-model="ruleForm.cookingsteps" id="cookingsteps"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm(ruleForm)">create</el-button>
@@ -62,7 +62,7 @@ import axios from 'axios'
           energy:'',
           PURL: '',
           VURL: '',
-          desc: ''
+          cookingsteps: ''
         },
        
         rules: {
@@ -87,7 +87,7 @@ import axios from 'axios'
           VURL: [
             { required: true, message: 'input a video url', trigger: 'blur' }
           ],
-          desc: [
+          cookingsteps: [
             { required: true, message: 'input steps', trigger: 'blur' }
           ]
         }
@@ -122,7 +122,7 @@ import axios from 'axios'
           energy: '',
           PURL: '',
           VURL: '',
-          desc: ''
+          cookingsteps: ''
         };
   },
       cancelForm(){

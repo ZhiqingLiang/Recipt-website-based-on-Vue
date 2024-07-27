@@ -3,32 +3,32 @@
 
 <template>
 <div class="container">
-    <h2 class="title">{{title}}</h2>
+    <h2 class="title">{{details.name}}</h2>
     <div class="media">
         <iframe
-        :src="VURL"
+        :src="details.VURL"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
         ></iframe>
   <!-- </div>
   <div class="photo"> -->
-        <img :src="PURL" alt="pic">
+        <img :src="details.PURL" alt="pic">
   </div>
     <div class="cookingDetail">
-        <p>Energy: {{enerygy}}</p>
-        <p>CookingTime:{{cookingtime}}</p>
+        <p>Energy: {{details.energy}}</p>
+        <p>CookingTime:{{details.cookingtime}}</p>
     </div>
-    <class class="ingredients">
+    <div class="ingredients">
         <h3>Ingredients:</h3>
         <p>
-           {{ingredients}}
+           {{details.ingredients}}
         </p>
-    </class>
+    </div>
     <div class="cookingstep">
         <h3>Cooking Steps:</h3>
         <p>
-            {{cookingstep}}
+            {{details.cookingsteps}}
         </p>
     </div>
 </div>
@@ -39,39 +39,46 @@
 <script>
 import axios from 'axios';
 export default {
-    ctreated(){
-        this.fetchRecipeDetail();
+    
+    created(){
+        console.log('fetchRecipeDetail created');
+        this.fetchRecipeDetail(_id);
     },
     data() {
         return {
-            // title:'',
+            // name:'',
             // VURL: '',
             // PURL:'',
             // photo:'',
             // energy:'',
             // cookingtime:'',
-            // cookingstep:'',
-            // ingredients:''
+            // cookingsteps:'',
+            // ingredients:'',
             details:[]
         };
     },
+     async created() {
+        const id = this.$route.params._id;
+        await this.fetchRecipeDetail(_id);
+  },
     methods:{
         async fetchRecipeDetail(){
             // 获取点击的id
-            const id= this.$route.params.id;
+            const id= this.$route.params._id;
             try{
-                const res = await axios.get(`http://localhost:3000/api/ChineseNoodles/getChineseN/${id}`)
-                this.details = res.data;
+                console.log("fetch id info")
+                const res = await axios.get(`http://localhost:3000/api/ChineseNoodles/getID/${_id}`)
+                this.details = [...res.data];
             }catch(error){
                 console.error('Cannot get the details of receipt:', error);
             }
             
         }
     },
-    watch:{
-        // 监听路由参数的变化
-        '$route.params.id': 'fetchRecipe'
-    }
+    // watch:{
+    //     // 监听路由参数的变化
+    //     '$route.params.id': 'fetchRecipeDetail'
+    // }
 }
 </script>
 

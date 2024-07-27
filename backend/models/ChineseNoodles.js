@@ -11,7 +11,7 @@ const url = (value)=>{
 }
 
 const cNoodelsSchema = new mongoose.Schema({
-    id:{type:Number,required:true,unique:true},
+    _id:{type:Number,required:true,unique:true},
     name: {type:String,required:true},
     label: {type:String,required:true},
     ingredients:{type:String,required:true},
@@ -31,8 +31,8 @@ const cNoodelsSchema = new mongoose.Schema({
         //     validator:url,
         //     message: props => `${props.value} is not a valid URL!`
         // },
-    },
-    desc:{type:String,required:true}
-})
+    }
+
+},{_id:false})
 
 export const ChineseNoodles = mongoose.model('ChineseNoodles',cNoodelsSchema,'ChineseNoodles')

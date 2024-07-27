@@ -5,7 +5,8 @@
   <div id="App">
     <div v-if="isLoginPage">
        <router-view />
-      </div>
+    </div>
+    <div v-else>
       <HeaderNav  @toggleSidebar="toggleSidebar"  :isCollapsed="isCollapsed"></HeaderNav>
       <div class="content">
         <SidePanel :isCollapsed="isCollapsed"></SidePanel>
@@ -13,6 +14,7 @@
           <router-view/>
         </div>
       </div>
+    </div>
       <Footer></Footer>
     
   </div>
