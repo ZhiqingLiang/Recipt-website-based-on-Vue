@@ -11,8 +11,8 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
         ></iframe>
-  </div>
-  <div class="photo">
+  <!-- </div>
+  <div class="photo"> -->
         <img src="https://cp1.douguo.com/upload/caiku/1/a/f/750_1ab3577a84b50d698cd17cfa140f904f.jpg" alt="pic">
   </div>
     <div class="cookingDetail">
@@ -22,15 +22,13 @@
     <class class="ingredients">
         <h3>Ingredients:</h3>
         <p>
-            200g whole wheat noodles<br>
-            2 large eggs<br>
-            1 bell pepper, thinly sliced<br>
-            1 carrot, thinly sliced<br>
-            2 cloves garlic, minced<br>
-            1 small piece of ginger, julienned<br>
-            2 tablespoons low-sodium soy sauce<br>
-            1 tablespoon olive oil<br>
-            A pinch of salt and pepper<br>
+            Soy Sauce,
+            Salt,
+            Sugar,
+            Oyster Sauce,
+            Green onions,
+            Eggs,
+            Noodles,
         </p>
     </class>
     <div class="cookingstep">
@@ -86,6 +84,7 @@ export default {
     background-repeat: no-repeat; /* 背景图不重复 */
     background-color: antiquewhite;
     height: 100vh;
+    width: 100%;
 }
 
 .title{
@@ -93,17 +92,31 @@ export default {
     text-align: center;
     background-color: rgb(240, 255, 255,0.3);
 }
-img{
+/* img{
     width: 30rem;
     height: 16rem;
 }
 iframe{
     width: 25rem;
     height: 16rem;
+} */
+.media{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+}
+iframe{
+    width: 60%;
+    height: 40%;
+}
+img{
+    width: 50%;
+    height: 60%;
 }
 .cookingDetail{
     background-color: rgb(240, 255, 255,0.3);
-    width:36rem;
+    width:70%;
     margin: 1rem 0;
 }
 .cookingDetail p{
@@ -111,7 +124,7 @@ iframe{
     
 }
 .ingredients{
-    width:36rem;
+    width:70%;
     padding: 0.5rem;
     background-color: rgb(240, 255, 255,0.5);
 }
@@ -119,7 +132,7 @@ iframe{
     padding-left: 1.5rem;
 }
 .cookingstep {
-    width:36rem;
+    width:70%;
     padding: 0.5rem ;
     background-color: rgb(240, 255, 255,0.5);
 }

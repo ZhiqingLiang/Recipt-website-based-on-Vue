@@ -7,7 +7,7 @@
     <div class="receiptBox" v-for="box in boxes" :key="box.id">
       <ul class="boxlist" >
         <li class="box" >
-          <a href="/ReceiptDetail" @click="navigate">
+          <a href="/CNoodleTemplate" @click="navigate">
               <div class="image">
                   <img :src="box.PURL" alt="img">
               </div>
@@ -75,7 +75,14 @@ export default {
       // 发送请求到后端
         const res = await axios.get('http://localhost:3000/api/ChineseNoodles/getChineseN');
         console.log("Received res:",res)
-        this.boxes = [...this.boxes, ...res.data]; // 合并数据
+        // 处理每个食谱的instruction
+        const receiptData = res.data.map(boxes=>{
+          return{
+            ...boxes,
+            instructions:box.instructions.split('\n')
+          }
+        })
+        this.boxes = [...this.boxes, receiptData]; // 合并数据,原先写的是res.data
         console.log("updated data:",this.boxes)
       }catch(error){
         // throw new Error('Cannot add a receipt:',error);

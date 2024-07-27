@@ -12,7 +12,7 @@ import ISaladR from '../views/ISaladR.vue'
 import CustomizedR from '../views/CustomizedR.vue'
 import AboutView from '../views/AboutView.vue'
 import BookAMeeting from '../views/BookAMeeting.vue'
-import ReceiptDetail from '../views/ReceiptDetail.vue'
+import CNoodleTemplate from '../views/CNoodleTemplate.vue'
 import LoginView from '../views/LoginView.vue'
 
 
@@ -73,11 +73,12 @@ const router = new Router({
           // meta: { requiresAuth: true }
         },
         {
-          path: '/ReceiptDetail',
-          name: 'ReceiptDetail',
-          component: ReceiptDetail,
+          path: '/CNoodleTemplate',
+          name: 'CNoodleTemplate',
+          component: CNoodleTemplate,
           // meta: { requiresAuth: true }
-        }
+        },
+
   ]
 })
 

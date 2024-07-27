@@ -1,10 +1,13 @@
+// Date:2024/7/27
+// Author:Zhiqing Liang
+
 <template>
   <div class="container">
     <h1 class="receipTtitle">Italian Recipts:Pasta</h1>
     <div class="receiptBox" v-for="(box,index) in boxes" :key="box.id">
       <ul class="boxlist" >
         <li class="box" >
-          <a href="#">
+          <a href="/ReceiptSample" @click="navigate">
               <div class="image">
                   <img src="" alt="img">
               </div>
@@ -57,6 +60,12 @@ export default {
     },
     del(id){
       this.boxes= this.boxes.filter(box=>box.id !=id)
+    },
+    navigate(e){
+      this.$router.push('/ReceiptDetail');
+      // 阻止默认行为以避免页面刷新
+      e.preventDefault();
+
     }
   }
 }

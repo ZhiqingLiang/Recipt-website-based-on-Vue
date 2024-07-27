@@ -14,7 +14,9 @@ const cNoodelsSchema = new mongoose.Schema({
     id:{type:Number,required:true,unique:true},
     name: {type:String,required:true},
     label: {type:String,required:true},
-    cookingtime:{type:String,require:true},
+    ingredients:{type:String,required:true},
+    cookingtime:{type:String,required:true},
+    cookingsteps:{type:String,required:true},
     energy:{type:String,required:true},
     PURL: {
         type:String,

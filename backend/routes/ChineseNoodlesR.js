@@ -28,6 +28,7 @@ router.get('/getChineseN',async(req,res)=>{
         const receipts = await ChineseNoodles.find();
         // console.log(receipts);
         const receiptsData = res.json(receipts);
+        this.instrction
         // res.send(receiptsData);
         // console.log(receiptsData);
     }catch(error){
