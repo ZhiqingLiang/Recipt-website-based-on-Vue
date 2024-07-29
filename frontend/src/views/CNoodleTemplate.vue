@@ -42,7 +42,7 @@ export default {
     
     created(){
         console.log('fetchRecipeDetail created');
-        this.fetchRecipeDetail(_id);
+        this.fetchRecipeDetail();
     },
     data() {
         return {
@@ -58,17 +58,17 @@ export default {
         };
     },
      async created() {
-        const id = this.$route.params._id;
-        await this.fetchRecipeDetail(_id);
+        const id = this.$route.params.id;
+        await this.fetchRecipeDetail();
   },
     methods:{
         async fetchRecipeDetail(){
             // 获取点击的id
-            const id= this.$route.params._id;
+            const id= this.$route.params.id;
             try{
                 console.log("fetch id info")
-                const res = await axios.get(`http://localhost:3000/api/ChineseNoodles/getID/${_id}`)
-                this.details = [...res.data];
+                const res = await axios.get(`http://localhost:3000/api/ChineseNoodles/getID/${id}`)
+                this.details = res.data;
             }catch(error){
                 console.error('Cannot get the details of receipt:', error);
             }

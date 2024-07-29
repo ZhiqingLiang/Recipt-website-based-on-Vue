@@ -3,6 +3,7 @@
 
 import express from 'express';
 import {ChineseNoodles} from '../models/ChineseNoodles.js'
+import mongoose from 'mongoose';
 const router = express.Router();
 
 // 这个接口是连接前端，增加菜单的
@@ -11,7 +12,6 @@ router.post('/addChineseN',async(req,res)=>{
     try{
         const newCN = new ChineseNoodles({
             ...req.body,//将对象中的所有属性和它们的值展开到新对象中
-            _id:Date.now().toString()
         });
         const save = await newCN.save();
         console.log('save receipt:',save)
@@ -37,12 +37,18 @@ router.get('/getChineseN',async(req,res)=>{
 });
 
 // 删除菜单的
-router.delete('/delChineseN/:_id',async(req,res)=>{
+router.delete('/delChineseN/:id',async(req,res)=>{
     try{
         // 请求参数中获取id
-        const {id} =req.params; 
+        // const {id} =req.params; 
+        const id = req.params.id
+        // 验证ID是否为有效的ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send('Invalid ID');
+        }
+        const ObjectId = new mongoose.Types.ObjectId(id);
         console.log(`Attempting to delete recipe with id: ${id}`);
-        const result = await ChineseNoodles.findOneAndDelete(_id);//根据id删除数据库的内容
+        const result = await ChineseNoodles.findOneAndDelete(ObjectId);//根据id删除数据库的内容
         if (!result) {
             res.status(404).json({ message: 'Recipe not found' });
           }else {
@@ -53,13 +59,21 @@ router.delete('/delChineseN/:_id',async(req,res)=>{
     }
 })
 
-router.get('/getID/:_id',async(req,res)=>{
+router.get('/getID/:id',async(req,res)=>{
     try{
+        const id = req.params.id;
+
+         // 验证ID是否为有效的ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).send('Invalid ID');
+        }
+    
         console.log('Starting to fetch receipts'); // 调试信息
-        const receipts = await ChineseNoodles.findById(req.params._id);
+        const ObjectId = new mongoose.Types.ObjectId(id);
+        const receipts = await ChineseNoodles.findById(ObjectId);
         // console.log(receipts);
         if(!receipts){
-            console.log('No data found for ID:', req.params._id); // 调试信息
+            console.log('No data found for ID:', id); // 调试信息
             return res.status(404).send('Receipt not found')
         }
         console.log('Fetched data by ID:', receipts);

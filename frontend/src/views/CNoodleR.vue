@@ -93,19 +93,19 @@ export default {
     show(){
       this.ruleFormVisible=true;
     },
-    async del(_id){
-       console.log(`Deleting receipt with id: ${_id}`); // 打印ID
+    async del(id){
+       console.log(`Deleting receipt with id: ${id}`); // 打印ID
       try{
-        const res = await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${_id}`)
+        const res = await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${id}`)
         console.log("delete response:",res);
-        this.boxes= this.boxes.filter(box=>box._id !=_id)
+        this.boxes= this.boxes.filter(box=>box.id !=id)
       }catch(error){
         throw new Error('Cannot delete a receipt:',error)
       }
     },
-    navigate(_id){
-      this.$router.push({name:'CNoodleTemplate',params:{id:_id}});
-      console.log(`Navigating to CNoodleTemplate with id: ${_id}`);
+    navigate(id){
+      this.$router.push({name:'CNoodleTemplate',params:{id:id}});
+      console.log(`Navigating to CNoodleTemplate with id: ${id}`);
       
 
     }

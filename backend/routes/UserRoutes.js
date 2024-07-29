@@ -36,7 +36,7 @@ try {
         res.status(201).json({ success: true, message: 'User registered successfully' });
         }
     } catch (err) {
-        onsole.error('Error registering user:', err);
+        console.error('Error registering user:', err);
         res.status(500).json({ success: false, message: 'There is an error while registering' });
         }
     });
