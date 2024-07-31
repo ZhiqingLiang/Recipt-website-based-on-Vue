@@ -10,7 +10,6 @@ import {chat} from './OpenAI.js'
 import bodyParser from 'body-parser';
 import UserRoutes from './routes/UserRoutes.js';
 import ChineseNoodlesR from './routes/ChineseNoodlesR.js'
-import CNoodleTemplateR from './routes/CNoodleTemplateR.js'
 import sendEmail from './SendMail.js';
 import mongoose from 'mongoose';
 

@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 //  ----------Login & Register Part -------
   // 定义模式和模型
 const userSchema = new mongoose.Schema({
-    name: String,
+    username: String,
     password: String,
     email: String
   });

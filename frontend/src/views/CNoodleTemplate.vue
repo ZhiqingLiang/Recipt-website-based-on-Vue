@@ -13,7 +13,7 @@
         ></iframe>
   <!-- </div>
   <div class="photo"> -->
-        <img :src="details.PURL" alt="pic">
+        <!-- <img :src="details.PURL" alt="pic"> -->
   </div>
     <div class="cookingDetail">
         <p>Energy: {{details.energy}}</p>
@@ -32,8 +32,6 @@
         </p>
     </div>
 </div>
-  
-
 </template>
 
 <script>
@@ -59,7 +57,7 @@ export default {
     },
      async created() {
         const id = this.$route.params.id;
-        await this.fetchRecipeDetail();
+        await this.fetchRecipeDetail(id);
   },
     methods:{
         async fetchRecipeDetail(){
@@ -116,13 +114,13 @@ iframe{
 
 }
 iframe{
-    width: 60%;
-    height: 40%;
+    width: 70%;
+    height: 90%;
 }
-img{
+/* img{
     width: 50%;
     height: 60%;
-}
+} */
 .cookingDetail{
     background-color: rgb(240, 255, 255,0.3);
     width:70%;

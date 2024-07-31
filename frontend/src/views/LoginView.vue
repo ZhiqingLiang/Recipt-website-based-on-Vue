@@ -233,14 +233,29 @@ export default {
                 const response = await axios.post('http://localhost:3000/api/Users/login', {
                     username: this.loginData.username,
                     password: this.loginData.password
-                });
-                
-                if (response.data.success) {
+                },
+                {
+                    headers: {
+                    'Content-Type': 'application/json'
+                    }
+            });
+                console.log("response:",response);
+                if(response.data.success){
+                    const username = response.data.username;
+                    console.log(username)
+                    if (username) {
                     localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('username',username)
+                    
                     this.$router.push('/AboutView');
-                } else {
-                    alert('Invalid username or password');
+                    } else {
+                        alert('Invalid username or password');
+                    }
+                }else {
+                    console.error('Fail to login:', response.data.message);
                 }
+                
+                
             }catch (error) {
                 console.error('There was an error logging in:', error);
                 alert('Something happened. Please try again.');

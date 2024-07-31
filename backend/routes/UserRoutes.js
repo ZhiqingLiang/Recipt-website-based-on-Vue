@@ -9,12 +9,13 @@ const router = express.Router();
 //接收前端
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    // console.log('Received login request:', req.body); 
+    console.log('Received login request:', req.body); 
     try {
-      const user = await User.findOne({ name: username, password: password });
-      // console.log('Database query result:', user);
+      const user = await User.findOne({ username, password });
+      console.log('Login attempt with:', { username, password });
+      console.log('Database query result:', user);
       if (user) {
-        res.status(200).json({ success: true });
+        res.status(200).json({ success: true, username: user.username });
       } else {
         res.status(401).json({ success: false });
       }

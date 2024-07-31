@@ -21,10 +21,10 @@
           </div>
         </li>
       </ul>
-       <el-button type="danger" icon="el-icon-delete" circle @click="del(box._id)"></el-button>
+      <el-button type="danger" icon="el-icon-delete" circle @click="del(box._id)" v-if="username==='admin'"></el-button>
     </div>
     <ReceiptForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit"></ReceiptForm><br>
-    <el-button type="primary" round class="button" @click="show">Add New</el-button>
+    <el-button type="primary" round class="button" @click="show" v-if="username==='admin'">Add New</el-button>
   </div>
 </template>
 
@@ -40,9 +40,10 @@ export default {
   data(){
     return{
       ruleFormVisible:false,
+      username:localStorage.getItem('username'),
       boxes:[ // 存储菜谱的数组
         {
-        _id:1,
+        _id:0,
         name:"Egg Braised Noodles",
         label:"Chinese Noodle", 
         energy:"600Kcal",
