@@ -14,6 +14,7 @@ import AboutView from '../views/AboutView.vue'
 import BookAMeeting from '../views/BookAMeeting.vue'
 import CNoodleTemplate from '../views/CNoodleTemplate.vue'
 import IPastaTemplate from '../views/IPastaTemplate.vue'
+import ISaladTemplate from '../views/ISaladTemplate.vue'
 import LoginView from '../views/LoginView.vue'
 
 
@@ -85,6 +86,12 @@ const router = new Router({
           component: IPastaTemplate,
           // meta: { requiresAuth: true }
         },
+        {
+          path: '/ISaladTemplate/:id',
+          name: 'ISaladTemplate',
+          component: ISaladTemplate,
+          // meta: { requiresAuth: true }
+        }
 
   ]
 })

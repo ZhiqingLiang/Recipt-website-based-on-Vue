@@ -1,21 +1,21 @@
-// Date:2024/7/21
+// Date:2024/7/31
 // Author:Zhiqing Liang
 
 import express from 'express';
-import {ChineseNoodles} from '../models/ChineseNoodles.js'
+import {ItalianSalad} from '../models/ItalianSalad.js'
 import mongoose from 'mongoose';
 const router = express.Router();
 
 // This interface is for connecting to the front-end and adding menus.
-router.post('/addChineseN',async(req,res)=>{
-    console.log('Received data:', req.body); // Print the request body data
+router.post('/addItalianS',async(req,res)=>{
+    console.log('Received data:', req.body); // Print the request body data// Print the request body data
     try{
-        const newCN = new ChineseNoodles(
-            req.body //Expand all properties and their values in the object to the new object
-        );
-        const save = await newCN.save();
+        const newIS = new ItalianSalad({
+            ...req.body, //Expand all properties and their values in the object to the new object
+        });
+        const save = await newIS.save();
         console.log('save receipt:',save)
-        res.status(201).send(save);  // Returns the newly added recipe data
+        res.status(201).send(save); // Returns the newly added recipe data
     }catch(error){
         console.error('Error saving recipe:', error); 
         res.status(400).send(error)
@@ -23,10 +23,10 @@ router.post('/addChineseN',async(req,res)=>{
 })
 
 // This interface is to connect to the front-end and get data for the menu
-router.get('/getChineseN',async(req,res)=>{
+router.get('/getItalianS',async(req,res)=>{
     try{
         console.log('Starting to fetch receipts'); // Debugging information
-        const receipts = await ChineseNoodles.find();
+        const receipts = await ItalianSalad.find();
         console.log('Get receiptd',receipts);
         res.json(receipts);
         // res.send(receiptsData);
@@ -37,18 +37,18 @@ router.get('/getChineseN',async(req,res)=>{
 });
 
 // Delete the menu's
-router.delete('/delChineseN/:id',async(req,res)=>{
+router.delete('/delItalianS/:id',async(req,res)=>{
     try{
-        // Get the id in the request parameters
+       // Get the id in the request parameters
         // const {id} =req.params; 
         const id = req.params.id
-        // verify that the ID is a valid ObjectId
+         // verify that the ID is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('Invalid ID');
         }
         const ObjectId = new mongoose.Types.ObjectId(id);
         console.log(`Attempting to delete recipe with id: ${id}`);
-        const result = await ChineseNoodles.findOneAndDelete(ObjectId);//Delete the contents of the database according to id
+        const result = await ItalianSalad.findOneAndDelete(ObjectId);//Delete the contents of the database according to id
         if (!result) {
             res.status(404).json({ message: 'Recipe not found' });
           }else {
@@ -63,14 +63,14 @@ router.get('/getID/:id',async(req,res)=>{
     try{
         const id = req.params.id;
 
-         // verify that the ID is a valid ObjectId
+        // verify that the ID is a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).send('Invalid ID');
         }
     
         console.log('Starting to fetch receipts'); 
         const ObjectId = new mongoose.Types.ObjectId(id);
-        const receipts = await ChineseNoodles.findById(ObjectId);
+        const receipts = await ItalianSalad.findById(ObjectId);
         // console.log(receipts);
         if(!receipts){
             console.log('No data found for ID:', id); 

@@ -1,68 +1,107 @@
-// Date:2024/7/27
+// Date:2024/7/31
 // Author:Zhiqing Liang
 
 <template>
   <div class="container">
     <h1 class="receipTtitle">Italian Recipts:Pasta</h1>
-    <div class="receiptBox" v-for="box in boxes" :key="box.id">
+    <div class="receiptBox" v-for="box in boxes" :key="box._id">
       <ul class="boxlist" >
         <li class="box" >
-          <a href="../views/IPastaTemplate.vue"  @click.prevent="navigate(box.id)">
+          <a href="./IPastaTemplatee"  @click.prevent="navigate(box._id)">
               <div class="image">
-                  <img :src="box.image" alt="img">
+                  <img :src="box.PURL" alt="img">
               </div>
           </a>
           <div class="txt">
               <h3 class="title">{{box.name}}</h3>
-              <p class="id"> id:{{box.id}}<p>
+              <p class="id"> id:{{box._id}}<p>
               <p class="label">Label:{{box.label}}</p>
               <p class="energy">Energy:{{box.energy}}</p>
               <p class="cookingtime">CookingTime:{{box.cookingtime}}</p>
           </div>
         </li>
       </ul>
-       <el-button type="danger" icon="el-icon-delete" circle @click="del(box.id)"></el-button>
+       <el-button type="danger" icon="el-icon-delete" circle @click="del(box._id)" v-if="username==='admin'"></el-button>
     </div>
-    <ReceiptForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit"></ReceiptForm><br>
-    <el-button type="primary" round class="button" @click="show">Add New</el-button>
+    <ReceiptForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit" ></ReceiptForm><br>
+    <el-button type="primary" round class="button" @click="show" v-if="username==='admin'">Add New</el-button>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+  
 export default {
+  created(){
+      console.log('IPastaR Component created');
+      this.fetchData();
+    },
   data(){
     return{
       ruleFormVisible:false,
-      boxes:[
-                {id:1,image:'https://preview.qiantucdn.com/58pic/20240327/00I58PICAvwMCcsbmaNWJ_PIC2018_PIC2018.jpg!qt_h320',name:'Chicken Tomato Pasta Recipe',energy:'400Kcal',cookingtime:'30mins',label:'Italian Pasta'},
-                {id:2,image:'https://thumbs.dreamstime.com/b/%E7%94%A8%E8%8F%A0%E8%8F%9C%E7%83%A4%E8%98%91%E8%8F%87%E7%83%B9%E5%88%B6%E7%9A%84%E6%84%8F%E5%A4%A7%E5%88%A9%E9%9D%A2-%E5%81%A5%E5%BA%B7%E7%B4%A0%E9%A3%9F%E9%A3%9F%E5%93%81-%E7%BB%BF%E7%B4%A0%E6%84%8F%E5%A4%A7%E5%88%A9%E9%9D%A2-%E6%A0%87%E9%A2%98%E8%8F%9C%E5%8D%95%E8%8F%9C%E5%8D%95%E5%A4%84%E6%96%B9-217947833.jpg',name:'Spinach and Mushroom Pasta',energy:'370Kcal',cookingtime:'20mins',label:'Italian Pasta'},
-            ]
+      username:localStorage.getItem('username'),
+      boxes:[ ]
     }
   },
   // show:控制表单的显示
   // newReceipt:创建新的对象
   methods:{
-    handleFormSubmit(form){
-      const newReceipt ={
-        title:form.title,
-        energy:form.energy,
-        cookingtime:form.cookingtime,
-        img:form.PURL,
-        label:form.receipt,
-        id:Date.now() //事件戳创建新的id
-      };
-      this.boxes.push(newReceipt);
-      this.ruleFormVisible=false;
-  
+
+    // handleFormSubmit(form){
+    //   const newReceipt ={
+    //     title:form.title,
+    //     energy:form.energy,
+    //     cookingtime:form.cookingtime,
+    //     img:form.PURL,
+    //     label:form.receipt,
+    //     id:Date.now() //事件戳创建新的id
+    //   };
+    //   this.boxes.push(newReceipt);
+    //   this.ruleFormVisible=false;
+    // },
+    async handleFormSubmit(form){
+      try{
+        this.ruleFormVisible=false;
+      // this.boxes.push(form);
+        const res = await axios.post('http://localhost:3000/api/ItalianPasta/addItalianP',form);
+        console.log('response data:', res.data);
+        this.fetchData(); 
+
+      }catch(error){
+        console.log("Cannot send data to backend",error)
+      }
+      
+    },
+    async fetchData(){
+      console.log('Fetching data...'); // 添加初始日志
+      try{
+      // Send request to back end
+        const res = await axios.get('http://localhost:3000/api/ItalianPasta/getItalianP');
+        console.log("Received res:",res)
+        this.boxes = [ ...res.data]; 
+        console.log("updated data:",this.boxes)
+      }catch(error){
+        // throw new Error('Cannot add a receipt:',error);
+        console.log("cannot get a data",error)
+      }
     },
     show(){
       this.ruleFormVisible=true;
     },
-    del(id){
-      this.boxes= this.boxes.filter(box=>box.id !=id)
+    //Remove recipes by id
+    async del(id){
+       console.log(`Deleting receipt with id: ${id}`); 
+      try{
+        const res = await axios.delete(`http://localhost:3000/api/ItalianPasta/delItalianP/${id}`)
+        console.log("delete response:",res);
+        this.boxes= this.boxes.filter(box=>box.id !=id);
+      }catch(error){
+        throw new Error('Cannot delete a receipt:',error)
+      }
     },
+    // Render the data based on the id of the recipe
     navigate(id){
-      this.$router.push({name:'IpastaTemplate',params:{id:id}});
+      this.$router.push({name:'IPastaTemplate',params:{id:id}});
       console.log(`Navigating to IPastaTemplate with id: ${id}`);
     }
   }
@@ -70,12 +109,11 @@ export default {
 </script>
 
 <style scoped>
-
 .container{
   background-image: url('@/assets/img/pastabg.jpg');
-  background-size: cover; /* 背景图覆盖整个容器 */
-  background-repeat: no-repeat; /* 背景图不重复 */
-  min-height: 100vh; /* 使容器至少占满整个视窗高度 */
+  background-size: cover;
+  background-repeat: no-repeat; 
+  min-height: 100vh;
   height: 100vh;
   overflow: auto;
 
@@ -96,7 +134,7 @@ export default {
   background-color: aliceblue;
 }
 .boxlist{
-    list-style-type: none; /* 移除ul的默认列表样式 */
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
@@ -114,4 +152,5 @@ export default {
     font-size: 16px;
     padding: 0.25rem;
 } 
-</style>;
+
+</style>

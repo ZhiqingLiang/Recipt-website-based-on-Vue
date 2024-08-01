@@ -10,34 +10,37 @@ import {chat} from './OpenAI.js'
 import bodyParser from 'body-parser';
 import UserRoutes from './routes/UserRoutes.js';
 import ChineseNoodlesR from './routes/ChineseNoodlesR.js'
+import ChineseRiceR from './routes/ChineseRiceR.js'
+import ItalianPastaR  from './routes/ItalianPastaR.js';
+import ItalianSaladR from './routes/ItalianSaladR.js';
 import sendEmail from './SendMail.js';
 import mongoose from 'mongoose';
 
 const app = express();
-// 设置服务器监听的端口号3000
+// Set the server to listen on port 3000
 const port = 3000; 
 
 
-// 跨平台传数据
+// Transfer data across platforms
 app.use(cors({
-  origin: 'http://localhost:8080', // 你的前端服务器地址
+  origin: 'http://localhost:8080', // Your front-end server address
   credentials: true
 }));
-// 解析JSON格式的请求体
+// Parses the request body in JSON format
 app.use(express.json())
 app.use(bodyParser.json())
 
 // ----------openai model-----------
-// 向前端发起请求
+// Make a request to the front end
 app.post('/api/chatRobot',async(req,res)=>{
-    // 从请求体解构出message数据，包含聊天的历史记录
+    // Deconstruct the message data from the request body, containing the chat history
     const { message } =req.body
     //console.log("Request body:", req.body);
     try{
-        // 调用OpenAI.js的函数
+        // Calling functions from OpenAI.js
         const robotReply = await chat(message);
         message.push({ role: 'assistant', content: robotReply });
-        // 更新后的message数据发送回客户端
+        // The updated message data is sent back to the client.
         res.json({ message });
     }catch(error) {
         console.error('Chat Robot does not reply', error);
@@ -61,21 +64,24 @@ app.post('/api/sendmail',async (req,res)=>{
       console.log('There is an error when sending email:',error)
     }
 });
-//  ----------数据库-----------
+//  ----------DataBase connection-----------
 mongoose.connect('mongodb://localhost:27017/receiptdb', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log('连接成功');
+    console.log('connect successfully');
   })
   .catch(err => {
     console.log('--------------');
-    console.log('数据库连接失败：', err);
+    console.log('cannot connect to database', err);
     console.log('--------------');
   });
 
-  // 启动后端的时候，会启动serve.js，所以需要由路由导航到每一个路由文件中
+  // When launching the backend, serve.js is launched, so it needs to be navigated to each route file by the route
 app.use('/api/ChineseNoodles',ChineseNoodlesR);
+app.use('/api/ChineseRice',ChineseRiceR);
+app.use('/api/ItalianPasta',ItalianPastaR);
+app.use('/api/ItalianSalad',ItalianSaladR);
 app.use('/api/Users',UserRoutes);
-// app.use('/api/ChineseNoodles',CNoodleTemplateR)
+
 
 
 //   -----------------------------------------------------

@@ -44,14 +44,6 @@ export default {
     },
     data() {
         return {
-            // name:'',
-            // VURL: '',
-            // PURL:'',
-            // photo:'',
-            // energy:'',
-            // cookingtime:'',
-            // cookingsteps:'',
-            // ingredients:'',
             details:[]
         };
     },
@@ -65,7 +57,7 @@ export default {
             const id= this.$route.params.id;
             try{
                 console.log("fetch id info")
-                const res = await axios.get(`http://localhost:3000/api/ItalianPasta/getID/${id}`)
+                const res = await axios.get(`http://localhost:3000/api/ChineseRice/getID/${id}`)
                 this.details = res.data;
             }catch(error){
                 console.error('Cannot get the details of receipt:', error);

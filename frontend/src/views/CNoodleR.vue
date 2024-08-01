@@ -41,16 +41,8 @@ export default {
     return{
       ruleFormVisible:false,
       username:localStorage.getItem('username'),
-      boxes:[ // 存储菜谱的数组
-        {
-        _id:0,
-        name:"Egg Braised Noodles",
-        label:"Chinese Noodle", 
-        energy:"600Kcal",
-        cookingtime:"25mins",
-        PURL: "https://cp1.douguo.com/upload/caiku/1/a/f/750_1ab3577a84b50d698cd17cfa140f904f.jpg"
-        }
-      ] 
+      boxes:[] // 存储菜谱的数组
+       
     };
   },
 
@@ -77,14 +69,7 @@ export default {
       // 发送请求到后端
         const res = await axios.get('http://localhost:3000/api/ChineseNoodles/getChineseN');
         console.log("Received res:",res)
-        // 处理每个食谱的instruction
-        // const receiptData = res.data.map(boxes=>{
-        //   return{
-        //     ...boxes,
-        //     cookingsteps:boxes.cookingsteps.split('\n')
-        //   }
-        // })
-        this.boxes = [...this.boxes, ...res.data]; // 合并数据,原先写的是res.data
+        this.boxes = [...res.data]; // 合并数据
         console.log("updated data:",this.boxes)
       }catch(error){
         // throw new Error('Cannot add a receipt:',error);
@@ -94,6 +79,7 @@ export default {
     show(){
       this.ruleFormVisible=true;
     },
+    // Remove recipes by id
     async del(id){
        console.log(`Deleting receipt with id: ${id}`); // 打印ID
       try{
@@ -104,11 +90,10 @@ export default {
         throw new Error('Cannot delete a receipt:',error)
       }
     },
+    // Render the data based on the id of the recipe
     navigate(id){
       this.$router.push({name:'CNoodleTemplate',params:{id:id}});
       console.log(`Navigating to CNoodleTemplate with id: ${id}`);
-      
-
     }
    
   }
@@ -122,6 +107,7 @@ export default {
   background-size: cover; /* 背景图覆盖整个容器 */
   background-repeat: no-repeat; /* 背景图不重复 */
   min-height: 100vh; /* 使容器至少占满整个视窗高度 */
+  height: 100vh;
   overflow: auto;
 
 }

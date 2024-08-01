@@ -61,11 +61,11 @@ export default {
   },
     methods:{
         async fetchRecipeDetail(){
-            // 获取点击的id
+            // Get the id of the click
             const id= this.$route.params.id;
             try{
                 console.log("fetch id info")
-                const res = await axios.get(`http://localhost:3000/api/ItalianPasta/getID/${id}`)
+                const res = await axios.get(`http://localhost:3000/api/ItalianSalad/getID/${id}`)
                 this.details = res.data;
             }catch(error){
                 console.error('Cannot get the details of receipt:', error);
@@ -103,19 +103,19 @@ export default {
     width: 30rem;
     height: 16rem;
 }
-/* iframe{
+iframe{
     width: 25rem;
     height: 16rem;
-}  */
+} */
 .media{
-    width: 40rem;
-    height: 40rem;
+    width: 100%;
+    height: 100%;
     text-align: center;
 
 }
 iframe{
-    width: 80%;
-    height: 100%;
+    width: 70%;
+    height: 90%;
 }
 /* img{
     width: 50%;
