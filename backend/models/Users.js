@@ -7,12 +7,12 @@
 import mongoose from "mongoose";
 
 //  ----------Login & Register Part -------
-  // 定义模式和模型
+  // define model
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
     email: String
   });
 
-//   模型定义了集合collection的结构
+// connect to collections-> 'usersinfo', and export model name 'userSchema'
 export const User = mongoose.model('User',userSchema,'usersinfo');

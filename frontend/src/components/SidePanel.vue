@@ -1,3 +1,6 @@
+//Date:2024/7/3
+//Author:Zhiqing Liang
+
 <template>
     <el-aside :width="isCollapsed ? '12rem' : '0rem'" class="aside">
         <el-menu class="menu">
@@ -45,7 +48,7 @@
 
 <script>
 export default {
-    props: { //接收父组件传来的数据
+    props: { //receive data from parent component
         isCollapsed: {
             type: Boolean,
             required: true

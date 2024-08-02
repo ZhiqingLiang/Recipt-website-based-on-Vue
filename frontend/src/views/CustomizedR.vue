@@ -1,9 +1,10 @@
 // Date:2024/7/19
 // Author:Zhiqing Liang
 
+<!-- This 'template' is for AI Chatbot -->
 <template>
 <div class="container">
-    <h1 class="title">Customized Your Receipt</h1>
+    <h1 class="title">Customized Your Recipe</h1>
     <div class="inputBox">
         <textarea v-model="input" placeholder="Enter your question" class="input"></textarea>
         <el-button type="primary" round class="send" @click="send">send</el-button><br>
@@ -28,16 +29,16 @@ export default {
         };
     },
     methods:{
-        // 加async，await是一部机制，因为网络请求需要一段事件来完成，如果不使用异步机制，代码将会被阻塞，无法继续执行其他操作
+        // add async, await is a mechanism, because the network request needs a period of events to complete, 
+        // if  do not use the asynchronous mechanism, the code will be blocked, can not continue to perform other operations
         async send(){
-            this.message.push({role:'user',content:this.input})
+            this.message.push({role:'user',content:this.input})  //Content displays the input
              try{
                 const res = await axios.post('http://localhost:3000/api/chatRobot',{
                 message:this.message
                 });
-
-                this.message = res.data.message
-                this.input ='';
+                this.message = res.data.message // get back-end's data
+                this.input =''; // clear textarea
                 
             }catch(error){
                 alert('this is a error:',error)
@@ -53,9 +54,9 @@ export default {
 <style scoped>
 .container{
   background-image: url('@/assets/img/customized.jpg');
-  background-size: cover; /* 背景图覆盖整个容器 */
-  background-repeat: no-repeat; /* 背景图不重复 */
-  min-height: 100vh; /* 使容器至少占满整个视窗高度 */
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  min-height: 100vh; 
   height: 100vh;
   overflow: auto;
 }

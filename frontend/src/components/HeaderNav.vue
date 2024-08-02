@@ -1,7 +1,12 @@
+//Date:2024/7/3
+//Author:Zhiqing Liang
+
+
 <template>
   <el-header class="header">
         <el-menu class="topMenu" mode="horizontal">
-          <!-- //将点击事件传送给父组件 -->
+          <!-- send data to parent component -->
+          <!-- The button appears depending on the size of the screen -->
           <el-button size="mini" round @click="$emit('toggleSidebar')" class="toggle-button">{{ isCollapsed ? '>' : '<' }}</el-button> 
           <el-menu-item index="1" class="itemMenu"  @click="$router.push('/')">About</el-menu-item>
           <el-menu-item index="2" class="itemMenu">
@@ -31,9 +36,9 @@ export default {
   },
   methods:{
     Logout(){
-      // 清除登录状态
+      // clear login data
       localStorage.removeItem('isLoggedIn');
-      // 重定向到登录页面
+      // re-route to login page
       this.$router.push({ name: 'LoginView' });
     },
     language(lang){

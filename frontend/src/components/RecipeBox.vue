@@ -37,9 +37,9 @@ export default {
 <style scoped>
 .boxlist{
     display: flex;
-    list-style-type: none; /* 移除ul的默认列表样式 */
-    flex-wrap: wrap; /* 如果盒子多于三个，会自动换行 */
-    justify-content: space-between; /* 在每个盒子之间均匀分布空白 */
+    list-style-type: none; 
+    flex-wrap: wrap; 
+    justify-content: space-between;
     padding: 0;
     margin: 0;
 }

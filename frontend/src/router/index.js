@@ -13,6 +13,7 @@ import CustomizedR from '../views/CustomizedR.vue'
 import AboutView from '../views/AboutView.vue'
 import BookAMeeting from '../views/BookAMeeting.vue'
 import CNoodleTemplate from '../views/CNoodleTemplate.vue'
+import CRiceTemplate from '../views/CRiceTemplate.vue'
 import IPastaTemplate from '../views/IPastaTemplate.vue'
 import ISaladTemplate from '../views/ISaladTemplate.vue'
 import LoginView from '../views/LoginView.vue'
@@ -81,6 +82,12 @@ const router = new Router({
           // meta: { requiresAuth: true }
         },
         {
+          path: '/CRiceTemplate/:id',
+          name: 'CRiceTemplate',
+          component: CRiceTemplate,
+          // meta: { requiresAuth: true }
+        },
+        {
           path: '/IPastaTemplate/:id',
           name: 'IPastaTemplate',
           component: IPastaTemplate,
@@ -97,13 +104,13 @@ const router = new Router({
 })
 
 /*r
- *  router.beforeEach - 在每次路由跳转前调用
- * （to,from,next) - to:即将要进入的目标路由对象；from：当前导航正要离开的路由对象；next：进入下一个导航页面
+ *  router.beforeEach - Called before each route jump.
+ * (to,from,next) - to: the target route to be entered; from: the route from which the current navigation is about to leave; next: the next navigation page to be entered.
  */
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  // to.matched是一个数组，包含了'to'路由对象匹配到的所有路由记录
-  // some(record => record.meta.requiresAuth):检查路由记录是否需要认证
+ // to.matched is an array of all the route records matched by the 'to' route object
+  // some(record => record.meta.requiresAuth): check if the routed record requires authentication
   if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
     next({ name: 'AboutView' });
   } else { 
@@ -112,11 +119,5 @@ router.beforeEach((to, from, next) => {
 });
   
 
-
-// const router = new VueRouter({
-//   mode: 'history',
-//   base: process.env.BASE_URL,
-//   routes
-// })
 
 export default router

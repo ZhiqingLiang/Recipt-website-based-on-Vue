@@ -111,7 +111,7 @@ import axios from 'axios'
               console.log('sending data:',this.ruleForm);
               //const res = await axios.post('http://localhost:3000/api/ChineseNoodles/addChineseN',this.ruleForm)
               //console.log('response data:',res.data)
-              this.$emit('submit', { ...this.ruleForm });// 传递新添加的菜谱数据
+              this.$emit('submit', { ...this.ruleForm });// send new recipt
               this.localVisible = false;
               this.resetForm ();
             }catch(error){
@@ -123,7 +123,7 @@ import axios from 'axios'
 
       },
        resetForm() {
-        // 重置表单数据
+        // reset data
         this.ruleForm = {
           name: '',
           label: '',

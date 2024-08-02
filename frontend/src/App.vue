@@ -1,6 +1,8 @@
 // Date:2024/7/1
 // Author:Zhiqing Liang
 
+
+<!--The main frame of this page, the only part that has changed is the <div class="main>.-->
 <template>
   <div id="App">
     <div v-if="isLoginPage">
@@ -36,7 +38,7 @@ export default {
   },
   data(){
     return{
-      isCollapsed:false //父组件监听来自导航栏的按钮事件
+      isCollapsed:false // The parent component listens for button events from the navigation bar.
     }
   },
   methods:{
@@ -56,7 +58,7 @@ export default {
   },
   
   computed:{
-    // 判断当前路由是否是登录页面
+    // Determine if the current route is a login page
     isLoginPage(){
       return this.$route.path === '/LoginView'
     }

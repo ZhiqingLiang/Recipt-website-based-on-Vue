@@ -37,21 +37,13 @@
 <script>
 import axios from 'axios';
 export default {
-    
+    // Getting data before rendering
     created(){
         console.log('fetchRecipeDetail created');
         this.fetchRecipeDetail();
     },
     data() {
         return {
-            // name:'',
-            // VURL: '',
-            // PURL:'',
-            // photo:'',
-            // energy:'',
-            // cookingtime:'',
-            // cookingsteps:'',
-            // ingredients:'',
             details:[]
         };
     },
@@ -70,7 +62,6 @@ export default {
             }catch(error){
                 console.error('Cannot get the details of receipt:', error);
             }
-            
         }
     },
     // watch:{

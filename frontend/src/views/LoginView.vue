@@ -10,7 +10,7 @@
     <div id="app">
         <div :class="['container', { 'active': isSignUp }]" id="container" >
             <section class="form-container signInContainer">
-                <!-- 当提交表单的时候，阻止默认的表单提交行为 -->
+                <!-- Block the default form submission behaviour when submitting a form -->
                 <form class="signIn" @submit.prevent="login"> 
                     <h1>-Sign in-</h1><br><br>
                     <i class="el-icon-user-solid"></i>
@@ -23,7 +23,7 @@
             </section>
 
             <section class="form-container signUpContainer">
-                <!-- 当提交表单的时候，阻止默认的表单提交行为 -->
+                <!-- Block the default form submission behaviour when submitting a form -->
                 <form class="signUp" @submit.prevent="register"> 
                     <h1>-Create An Account-</h1><br><br>
                     <i class="el-icon-user-solid"></i>
@@ -122,7 +122,7 @@
         z-index: 2;
     }
     .container.active .signInContainer{
-        /* 移到自身宽度的右边 */
+         /* Move to the right of its own width */
         transform: translateX(100%); 
     }
     .signUpContainer{
@@ -138,7 +138,7 @@
         animation: move 0.6s;
     }
     @keyframes move {
-        /* 动画前半部分，元素是不可见的 */
+        /* The element is invisible for the first half of the animation */
         0%,49.99%{ 
             opacity: 0;
             z-index: 1;
@@ -162,7 +162,7 @@
         transform: translateX(-100%);
     }
     .toggle{
-        /* transform 改变位置；transition改变平滑度 */
+        /* transform changes position; transition changes smoothness */
         background-color: aliceblue;
         height: 100%;
         position: relative;
@@ -243,10 +243,11 @@ export default {
                 if(response.data.success){
                     const username = response.data.username;
                     console.log(username)
+                    // Stores the name of the logged in user for later functionality judgement
                     if (username) {
                     localStorage.setItem('isLoggedIn', 'true');
                     localStorage.setItem('username',username)
-                    
+                    // Jump to the AboutView page
                     this.$router.push('/AboutView');
                     } else {
                         alert('Invalid username or password');
@@ -254,8 +255,6 @@ export default {
                 }else {
                     console.error('Fail to login:', response.data.message);
                 }
-                
-                
             }catch (error) {
                 console.error('There was an error logging in:', error);
                 alert('Something happened. Please try again.');
@@ -270,15 +269,28 @@ export default {
                 });
                 if (response.data.success) {
                     alert('Registration successful!');
-                // 你可以在这里添加更多逻辑，比如跳转到登录页面
                 } else {
                     alert('Registration failed: ' + response.data.message);
                 }
             }catch (error) {
-                console.error('There was an error registering:', error);
-                alert('An error occurred while registering. Please try again.');
+                if(error.response){
+                    const {status,data} = error.response;
+                    if(status === 400){
+                        if(data.errorCode === 'ACCOUNT_EXIST'){
+                            alert('Cannot register:' + data.message)
+                        }else{
+                            alert('Request failed:' + data.message)
+                        }
+                    }else {
+                        console.error('Unexpected error status:', status, data);
+                        alert('An error occurred. Please try again.');
+                    }
+               
             }
+             console.error('There was an error registering:', error);
+            alert('An error occurred while registering. Please try again.');
         }
+    }
     }
 }
 </script>

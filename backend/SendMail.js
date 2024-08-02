@@ -7,6 +7,7 @@
 
 import nodemailer from 'nodemailer'
 
+// create an object for sending email
 const transport = nodemailer.createTransport({
     host:'smtp.qq.com',
     secure:false,
@@ -18,20 +19,20 @@ const transport = nodemailer.createTransport({
 });
 
 const sendEmail = async ({username,number,date,time,desc})=>{
-    // 创建一个传输对象
+    // Create a transport object
     const mailContent ={
-        from: 'vanyaliang@foxmail.com', // 发件人地址
+        from: 'vanyaliang@foxmail.com', 
         to:'testforproject89@gmail.com',
         subject:`Message from ${username}`,
         text:`${username}'s phone number is ${number}.${username} 
         would like to have a meeting with you on ${date} at ${time}. And this is the description: ${desc}`
     };
     
-    // 发送邮件
+    // send email
     await transport.sendMail(mailContent)
     
 };
-// 导出这个函数，使其可以在其他文件中被引入
+// export model
 export default sendEmail;
 
 

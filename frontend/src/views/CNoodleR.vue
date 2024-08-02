@@ -1,10 +1,12 @@
 // Date:2024/7/22
 // Author:Zhiqing Liang
 
+
+<!-- This 'template' is for Chinese Noodles Recipe -->
 <template>
   <div class="container">
-    <h1 class="receipTtitle">Chinese Recipts:Noodle</h1>
-    <div class="receiptBox" v-for="box in boxes" :key="box._id">
+    <h1 class="recipeTtitle">Chinese Recipe:Noodle</h1>
+    <div class="recipeBox" v-for="box in boxes" :key="box._id">
       <ul class="boxlist" >
         <li class="box" >
           <a href="/CNoodleTemplate" @click.prevent="navigate(box._id)" >
@@ -23,7 +25,7 @@
       </ul>
       <el-button type="danger" icon="el-icon-delete" circle @click="del(box._id)" v-if="username==='admin'"></el-button>
     </div>
-    <ReceiptForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit"></ReceiptForm><br>
+    <RecipeForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit"></RecipeForm><br>
     <el-button type="primary" round class="button" @click="show" v-if="username==='admin'">Add New</el-button>
   </div>
 </template>
@@ -41,38 +43,54 @@ export default {
     return{
       ruleFormVisible:false,
       username:localStorage.getItem('username'),
-      boxes:[] // 存储菜谱的数组
+      boxes:[] // for store array
        
     };
   },
 
-  // show:控制表单的显示
-  // newReceipt:创建新的对象
   methods:{
     
     async handleFormSubmit(form){
       try{
         this.ruleFormVisible=false;
-      // this.boxes.push(form);
+        // check the name of recipe if duplicate
         const res = await axios.post('http://localhost:3000/api/ChineseNoodles/addChineseN',form);
-        console.log('response data:', res.data);
-        this.fetchData(); 
-
+        if(res.data.success){
+          alert('This recipe add successfully')
+          this.fetchData();
+        }else{
+          alert('Failed to add recipe:',res.data.message)
+        }
       }catch(error){
-        console.log("Cannot send data to backend",error)
+        if(error.response){
+          const {status,data} = error.response;
+          if(status === 400){
+            if(data.errorCode === 'DUPLICATE_RECIPE'){
+              alert('Cannot add receipt:' + data.message)
+            }else{
+              alert('Request failed:' + data.message)
+            }
+          }else {
+            console.error('Other errors status:', status, data);
+            alert('Somthing goes wrong. Please try again.');
+          }
+        }else{
+          console.error('Error sending data to backend:', error);
+          alert('An error occurred while adding the recipe. Please try again.');
+        }
       }
       
     },
     async fetchData(){
-      console.log('Fetching data...'); // 添加初始日志
+      console.log('Fetching data...'); 
       try{
-      // 发送请求到后端
+      // send request to backend
         const res = await axios.get('http://localhost:3000/api/ChineseNoodles/getChineseN');
         console.log("Received res:",res)
-        this.boxes = [...res.data]; // 合并数据
+        this.boxes = [...res.data]; 
         console.log("updated data:",this.boxes)
       }catch(error){
-        // throw new Error('Cannot add a receipt:',error);
+        // throw new Error('Cannot add a recipe:',error);
         console.log("cannot get a data",error)
       }
     },
@@ -81,13 +99,13 @@ export default {
     },
     // Remove recipes by id
     async del(id){
-       console.log(`Deleting receipt with id: ${id}`); // 打印ID
+       console.log(`Deleting recipe with id: ${id}`); // 打印ID
       try{
         const res = await axios.delete(`http://localhost:3000/api/ChineseNoodles/delChineseN/${id}`)
         console.log("delete response:",res);
         this.boxes= this.boxes.filter(box=>box.id !=id)
       }catch(error){
-        throw new Error('Cannot delete a receipt:',error)
+        throw new Error('Cannot delete a recipe:',error)
       }
     },
     // Render the data based on the id of the recipe
@@ -101,17 +119,16 @@ export default {
 </script>
 
 <style scoped>
-
 .container{
   background-image: url('@/assets/img/noodlebg.jpg');
-  background-size: cover; /* 背景图覆盖整个容器 */
-  background-repeat: no-repeat; /* 背景图不重复 */
-  min-height: 100vh; /* 使容器至少占满整个视窗高度 */
+  background-size: cover; 
+  background-repeat: no-repeat; 
+  min-height: 100vh; 
   height: 100vh;
   overflow: auto;
 
 }
-.receipTtitle{
+.recipeTtitle{
   color: black;
   background-color: rgb(255,255,255,0.6);
   text-align: center;
@@ -120,14 +137,14 @@ export default {
 .button{
   margin: 0.5rem 1.5rem;
 }
-.receiptBox{
+.recipeBox{
   display: inline-block;
   width: 16rem;
   margin: 1rem;
   background-color: aliceblue;
 }
 .boxlist{
-    list-style-type: none; /* 移除ul的默认列表样式 */
+    list-style-type: none; 
     padding: 0;
     margin: 0;
 }

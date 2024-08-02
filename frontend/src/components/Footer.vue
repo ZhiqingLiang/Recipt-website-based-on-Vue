@@ -1,3 +1,6 @@
+//Date:2024/7/3
+//Author:Zhiqing Liang
+
 <template>
     <el-footer class="footer">
         <span class="copyright">cpoyright @Newcastle University</span>

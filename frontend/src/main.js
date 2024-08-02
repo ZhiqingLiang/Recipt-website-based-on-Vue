@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router'
 import HeaderNav from './components/HeaderNav'
 import SidePanel from './components/SidePanel'
-import ReceiptBox from './components/ReceiptBox'
-import ReceiptForm from './components/ReceiptForm'
+import RecipeBox from './components/RecipeBox'
+import RecipeForm from './components/RecipeForm'
 import Footer from './components/Footer'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -23,8 +23,8 @@ Vue.use(VueI18n)
 Vue.use(ElementUI)
 Vue.component('HeaderNav',HeaderNav)
 Vue.component('SidePanel',SidePanel)
-Vue.component('ReceiptBox',ReceiptBox)
-Vue.component('ReceiptForm',ReceiptForm)
+Vue.component('RecipeBox',RecipeBox)
+Vue.component('RecipeForm',RecipeForm)
 Vue.component('Footer',Footer)
 
 const i18n = new VueI18n({

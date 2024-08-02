@@ -1,13 +1,14 @@
 // Date:2024/7/31
 // Author:Zhiqing Liang
 
+<!-- This 'template' is for Chinese Rice Recipe -->
 <template>
   <div class="container">
-    <h1 class="receipTtitle">Italian Recipts:Pasta</h1>
-    <div class="receiptBox" v-for="box in boxes" :key="box._id">
+    <h1 class="recipeTtitle">Italian Recipe:Pasta</h1>
+    <div class="recipeBox" v-for="box in boxes" :key="box._id">
       <ul class="boxlist" >
         <li class="box" >
-          <a href="./CRiceTemplatee"  @click.prevent="navigate(box._id)">
+          <a href="./CRiceTemplate"  @click.prevent="navigate(box._id)">
               <div class="image">
                   <img :src="box.PURL" alt="img">
               </div>
@@ -23,7 +24,7 @@
       </ul>
        <el-button type="danger" icon="el-icon-delete" circle @click="del(box._id)" v-if="username==='admin'"></el-button>
     </div>
-    <ReceiptForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit" ></ReceiptForm><br>
+    <RecipeForm :visible.sync="ruleFormVisible"  @submit="handleFormSubmit" ></RecipeForm><br>
     <el-button type="primary" round class="button" @click="show" v-if="username==='admin'">Add New</el-button>
   </div>
 </template>
@@ -43,24 +44,42 @@ export default {
       boxes:[ ]
     }
   },
-  // show:控制表单的显示
-  // newReceipt:创建新的对象
+
   methods:{
     async handleFormSubmit(form){
       try{
         this.ruleFormVisible=false;
       // this.boxes.push(form);
         const res = await axios.post('http://localhost:3000/api/ChineseRice/addChineseR',form);
-        console.log('response data:', res.data);
-        this.fetchData(); 
-
+        if(res.data.success){
+          alert('This recipe add successfully')
+          this.fetchData();
+        }else{
+          alert('Failed to add recipe:',res.data.message)
+        }
       }catch(error){
-        console.log("Cannot send data to backend",error)
+        if(error.response){
+          const {status,data} = error.response;
+          if(status === 400){
+            if(data.errorCode === 'DUPLICATE_RECIPE'){
+              alert('Cannot add receipt:' + data.message)
+            }else{
+              alert('Request failed:' + data.message)
+            }
+          }else {
+            console.error('Other errors status:', status, data);
+            alert('Somthing goes wrong. Please try again.');
+          }
+        }else{
+          console.error('Error sending data to backend:', error);
+          alert('An error occurred while adding the recipe. Please try again.');
+        }
       }
-      
     },
+
+    //fetch data from backend
     async fetchData(){
-      console.log('Fetching data...'); // 添加初始日志
+      console.log('Fetching data...'); 
       try{
       // Send request to back end
         const res = await axios.get('http://localhost:3000/api/ChineseRice/getChineseR');
@@ -68,22 +87,24 @@ export default {
         this.boxes = [ ...res.data]; 
         console.log("updated data:",this.boxes)
       }catch(error){
-        // throw new Error('Cannot add a receipt:',error);
+        // throw new Error('Cannot add a recipe:',error);
         console.log("cannot get a data",error)
       }
     },
+
+    // show(): Controls the display of the form.
     show(){
       this.ruleFormVisible=true;
     },
     //Remove recipes by id
     async del(id){
-       console.log(`Deleting receipt with id: ${id}`); 
+       console.log(`Deleting recipe with id: ${id}`); 
       try{
         const res = await axios.delete(`http://localhost:3000/api/ChineseRice/delChineseR/${id}`)
         console.log("delete response:",res);
         this.boxes= this.boxes.filter(box=>box.id !=id);
       }catch(error){
-        throw new Error('Cannot delete a receipt:',error)
+        throw new Error('Cannot delete a recipe:',error)
       }
     },
     // Render the data based on the id of the recipe
@@ -106,7 +127,7 @@ export default {
   overflow: auto;
 
 }
-.receipTtitle{
+.recipeTtitle{
   color: black;
   background-color: rgb(255,255,255,0.6);
   text-align: center;
@@ -115,14 +136,14 @@ export default {
 .button{
   margin: 0.5rem 1.5rem;
 }
-.receiptBox{
+.recipeBox{
   display: inline-block;
   width: 16rem;
   margin: 1rem;
   background-color: aliceblue;
 }
 .boxlist{
-    list-style-type: none; /* 移除ul的默认列表样式 */
+    list-style-type: none; 
     padding: 0;
     margin: 0;
 }

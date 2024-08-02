@@ -6,7 +6,7 @@ import {User} from '../models/Users.js'
 const router = express.Router();
 
 
-//接收前端
+//receive data from front end
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     console.log('Received login request:', req.body); 
@@ -28,12 +28,15 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
 const { username, password, email } = req.body;
 try {
-    const existingUser = await User.findOne({ email: email }); // Bug:相同账号注册第二次直接出现error，不会出现“Email already exists”
+    const existingUser = await User.findOne({ email: email.toLowerCase() }); // Bug:相同账号注册第二次直接出现error，不会出现“Email already exists”
     if (existingUser) {
-        return res.status(400).json({ success: false, message: 'Email already exists' });
+        return res.status(400).json({ 
+          success: false, 
+          errorCode:'ACCOUNT_EXIST',
+          message: 'Email already exists' });
     }else{
         const newUser = new User({ name: username, password: password, email: email });
-        await newUser.save();// 保存数据到数据库
+        await newUser.save();// save in database
         res.status(201).json({ success: true, message: 'User registered successfully' });
         }
     } catch (err) {
@@ -42,6 +45,6 @@ try {
         }
     });
 
-//导出模块在serve.js引入并使用
+//export model and import in serve.js
 export default router
 

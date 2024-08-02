@@ -1,6 +1,7 @@
 // Date:2024/7/31
 // Author:Zhiqing Liang
 
+<!-- Rendering data to a new page  -->
 <template>
 <div class="container">
     <h2 class="title">{{details.name}}</h2>
@@ -44,14 +45,6 @@ export default {
     },
     data() {
         return {
-            // name:'',
-            // VURL: '',
-            // PURL:'',
-            // photo:'',
-            // energy:'',
-            // cookingtime:'',
-            // cookingsteps:'',
-            // ingredients:'',
             details:[]
         };
     },
@@ -61,7 +54,7 @@ export default {
   },
     methods:{
         async fetchRecipeDetail(){
-            // 获取点击的id
+            // Get id
             const id= this.$route.params.id;
             try{
                 console.log("fetch id info")

@@ -1,6 +1,8 @@
 // Date:2024/7/27
 // Author:Zhiqing Liang
 
+
+<!-- Rendering data to a new page  -->
 <template>
 <div class="container">
     <h2 class="title">{{details.name}}</h2>
@@ -44,14 +46,6 @@ export default {
     },
     data() {
         return {
-            // name:'',
-            // VURL: '',
-            // PURL:'',
-            // photo:'',
-            // energy:'',
-            // cookingtime:'',
-            // cookingsteps:'',
-            // ingredients:'',
             details:[]
         };
     },
@@ -61,7 +55,7 @@ export default {
   },
     methods:{
         async fetchRecipeDetail(){
-            // 获取点击的id
+            // get id
             const id= this.$route.params.id;
             try{
                 console.log("fetch id info")
@@ -84,11 +78,11 @@ export default {
 .container{
     overflow: auto;
     display: flex;
-    align-items: center; /* 垂直居中 */
+    align-items: center;
     flex-direction: column;
     background-image: url('@/assets/img/receiptdetailbg.jpg');
-    background-size: cover; /* 背景图覆盖整个容器 */
-    background-repeat: no-repeat; /* 背景图不重复 */
+    background-size: cover; 
+    background-repeat: no-repeat; 
     background-color: antiquewhite;
     height: 100vh;
     width: 100%;

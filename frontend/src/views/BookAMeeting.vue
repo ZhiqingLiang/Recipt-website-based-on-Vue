@@ -2,6 +2,7 @@
 // Author:Zhiqing Liang
 // Reference Link:https://www.axios-http.cn/docs/res_schema
 
+
 <template>
 <div class="container">
     <h2 class="title">Book A Meeting </h2>
@@ -57,16 +58,8 @@
       };
     },
     methods: {
-      // 获取的值就是在data（）里的值
       async onSubmit() {
-        // const data ={
-        //   username:this.username,
-        //   number:this.number,
-        //   date1:this.date1,
-        //   date2:this.date2,
-        //   desc:this.desc
-        // };
-        this.$refs.meetingForm.validate(async(valid)=>{ // 验证表单
+        this.$refs.meetingForm.validate(async(valid)=>{ // validate form
           if(valid){
             try{
               const res = await axios.post('http://localhost:3000/api/sendmail',this.meetingForm)
@@ -76,13 +69,6 @@
             }
           }
         })
-        
-          // .then(res=>{
-          //   alert("send successfully" + res.data);
-          // })
-          // .catch(error=>{
-          //   alert("Error:",error)
-          // });
       }
     }
   };
