@@ -83,7 +83,6 @@ export default {
     color: black;
     border: none;
     width: 2rem;
-    /* padding: 0.5rem; */
    
   }
   .topMenu{

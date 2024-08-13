@@ -28,14 +28,14 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
 const { username, password, email } = req.body;
 try {
-    const existingUser = await User.findOne({ email: email.toLowerCase() }); // Bug:相同账号注册第二次直接出现error，不会出现“Email already exists”
+    const existingUser = await User.findOne({ email: email.toLowerCase() }); 
     if (existingUser) {
         return res.status(400).json({ 
           success: false, 
           errorCode:'ACCOUNT_EXIST',
           message: 'Email already exists' });
     }else{
-        const newUser = new User({ name: username, password: password, email: email });
+        const newUser = new User({ username: username, password: password, email: email });
         await newUser.save();// save in database
         res.status(201).json({ success: true, message: 'User registered successfully' });
         }

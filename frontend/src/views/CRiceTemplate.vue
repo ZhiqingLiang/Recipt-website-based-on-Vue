@@ -13,9 +13,6 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
         ></iframe>
-  <!-- </div>
-  <div class="photo"> -->
-        <!-- <img :src="details.PURL" alt="pic"> -->
   </div>
     <div class="cookingDetail">
         <p>Energy: {{details.energy}}</p>

@@ -113,7 +113,7 @@ export default {
 
 <style scoped>
 .container{
-  background-image: url('@/assets/img/pastabg.jpg');
+  background-image: url('@/assets/img/salad.jpg');
   background-size: cover;
   background-repeat: no-repeat; 
   min-height: 100vh;

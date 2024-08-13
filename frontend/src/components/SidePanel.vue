@@ -80,25 +80,11 @@ export default {
     margin-left: 20px;
 }
 
-/* .sidePanel-collapsed  {
-  width: 0;
-} */
-/* @media (min-width: 769px) {
- .aside{
-    width: 12rem;
- }
-} */
 @media (max-width: 768px) {
  .aside {
     width: 0;
     height: 100vh;
     background-color:#F0EBE3;
   }
-
-/* .sidePanel-collapsed {
-    min-width: 12rem;
-  } */
-
-  
 }
 </style>
