@@ -13,16 +13,16 @@ const transport = nodemailer.createTransport({
     secure:false,
     port: 587,
     auth: {
-        user: 'vanyaliang@foxmail.com', 
-        pass: 'jdrencbcfsbibeda'    
+        user: '', 
+        pass: ''    
     }
 });
 
 const sendEmail = async ({username,number,date,time,desc})=>{
     // Create a transport object
     const mailContent ={
-        from: 'vanyaliang@foxmail.com', 
-        to:'testforproject89@gmail.com',
+        from: '', 
+        to:'',
         subject:`Message from ${username}`,
         text:`${username}'s phone number is ${number}.${username} 
         would like to have a meeting with you on ${date} at ${time}. And this is the description: ${desc}`
@@ -42,8 +42,8 @@ export default sendEmail;
 //     let status = null
 //     await new Promise((resolve,reject)=>{
 //         transporter.sendMail({
-//             from: 'vanyaliang@foxmail.com',     // 发件人地址
-//             to: 'testforproject89@gmail.com',  // 收件人地址
+//             from: '',     // 发件人地址
+//             to: '',  // 收件人地址
 //             subject: 'About have a meeting with you',    // 主题
 //             text: 'Hello, this is Vanya, I would like to apply for a service to help me foster a healthy diet' // 邮件内容
 //         },function(err,info){
